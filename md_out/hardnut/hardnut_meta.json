@@ -1,0 +1,511 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Hardnut Report \u2013 Egholm A/S",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          56.45703125,
+          86.7490234375
+        ],
+        [
+          213.70399475097656,
+          86.7490234375
+        ],
+        [
+          213.70399475097656,
+          99.23150634765625
+        ],
+        [
+          55.29296875,
+          99.23150634765625
+        ]
+      ]
+    },
+    {
+      "title": "Introduction",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          56.63999938964844,
+          112.19146728515625
+        ],
+        [
+          124.52400207519531,
+          111.4169921875
+        ],
+        [
+          124.52400207519531,
+          124.19146728515625
+        ],
+        [
+          55.583984375,
+          124.19146728515625
+        ]
+      ]
+    },
+    {
+      "title": "Understanding the Problem",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          56.63999938964844,
+          490.6014709472656
+        ],
+        [
+          206.26797485351562,
+          490.0703125
+        ],
+        [
+          206.26797485351562,
+          502.6014709472656
+        ],
+        [
+          55.875,
+          502.6014709472656
+        ]
+      ]
+    },
+    {
+      "title": "Exploration and Methods",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          56.63999938964844,
+          212.991455078125
+        ],
+        [
+          192.361328125,
+          211.7333984375
+        ],
+        [
+          192.09597778320312,
+          224.991455078125
+        ],
+        [
+          55.583984375,
+          224.991455078125
+        ]
+      ]
+    },
+    {
+      "title": "1. Discover:",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          74.66399383544922,
+          262.7138671875
+        ],
+        [
+          144.34800720214844,
+          261.0693359375
+        ],
+        [
+          144.34800720214844,
+          274.94146728515625
+        ],
+        [
+          74.208984375,
+          274.94146728515625
+        ]
+      ]
+    },
+    {
+      "title": "2. Define:",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          74.208984375,
+          338.3623046875
+        ],
+        [
+          132.34799194335938,
+          336.7177734375
+        ],
+        [
+          132.34799194335938,
+          350.9014892578125
+        ],
+        [
+          73.044921875,
+          350.9014892578125
+        ]
+      ]
+    },
+    {
+      "title": "3. Develop:",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          73.626953125,
+          414.421875
+        ],
+        [
+          141.34800720214844,
+          412.77734375
+        ],
+        [
+          141.34800720214844,
+          426.7414855957031
+        ],
+        [
+          73.626953125,
+          426.7414855957031
+        ]
+      ]
+    },
+    {
+      "title": "4. Deliver:",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          73.044921875,
+          572.296875
+        ],
+        [
+          135.21600341796875,
+          572.296875
+        ],
+        [
+          135.21600341796875,
+          585.521484375
+        ],
+        [
+          73.044921875,
+          585.521484375
+        ]
+      ]
+    },
+    {
+      "title": "The Proposed Concept \u2013 Supporting Efficient Behavior",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          56.166015625,
+          86.7490234375
+        ],
+        [
+          349.27398681640625,
+          86.7490234375
+        ],
+        [
+          349.27398681640625,
+          99.23150634765625
+        ],
+        [
+          55.001953125,
+          99.23150634765625
+        ]
+      ]
+    },
+    {
+      "title": "Strategic and Technical Reflections",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          55.583984375,
+          472.72149658203125
+        ],
+        [
+          248.1479949951172,
+          471.98046875
+        ],
+        [
+          248.1479949951172,
+          484.72149658203125
+        ],
+        [
+          55.583984375,
+          484.72149658203125
+        ]
+      ]
+    },
+    {
+      "title": "Human Factors and Behavioral Insights",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          56.45703125,
+          254.90234375
+        ],
+        [
+          269.1839904785156,
+          253.2578125
+        ],
+        [
+          269.1839904785156,
+          267.021484375
+        ],
+        [
+          55.29296875,
+          267.021484375
+        ]
+      ]
+    },
+    {
+      "title": "Group Dynamics and Learning Process",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          56.166015625,
+          573.521484375
+        ],
+        [
+          266.1839599609375,
+          572.7080078125
+        ],
+        [
+          266.1839599609375,
+          585.521484375
+        ],
+        [
+          56.166015625,
+          585.521484375
+        ]
+      ]
+    },
+    {
+      "title": "Reflections from Previous Project",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          55.875,
+          154.07147216796875
+        ],
+        [
+          238.66798400878906,
+          154.07147216796875
+        ],
+        [
+          238.66798400878906,
+          166.07147216796875
+        ],
+        [
+          55.875,
+          166.07147216796875
+        ]
+      ]
+    },
+    {
+      "title": "Conclusion",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          56.63999938964844,
+          380.2978515625
+        ],
+        [
+          119.2439956665039,
+          378.6533203125
+        ],
+        [
+          119.2439956665039,
+          392.781494140625
+        ],
+        [
+          55.583984375,
+          392.781494140625
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          89
+        ],
+        [
+          "Line",
+          31
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          77
+        ],
+        [
+          "Line",
+          27
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "SectionHeader",
+          5
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          99
+        ],
+        [
+          "Line",
+          30
+        ],
+        [
+          "Text",
+          9
+        ],
+        [
+          "ListItem",
+          7
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          79
+        ],
+        [
+          "Line",
+          30
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          63
+        ],
+        [
+          "Line",
+          24
+        ],
+        [
+          "Text",
+          8
+        ],
+        [
+          "SectionHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/hardnut"
+}

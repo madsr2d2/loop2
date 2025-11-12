@@ -1,0 +1,45 @@
+\section{Prototype}\label{sec:prototype}
+
+This section documents the alpha version of the Solar Readiness Brief proposed in Section \ref{sec:proposal}. The alpha version (early prototype) was presented as a live demo during the project presentation. An image of the UI is presented in Figure \ref{fig:prototype}. The goal of the alpha version is to show an end-to-end, address-specific pre-feasibility flow that a board member or resident can use to assess rooftop PV potential for a single building.
+
+\begin{itemize}
+  \item \textbf{Delivers today:} DAWA-backed address autocomplete and geocoding $\rightarrow$ sologvindinfo.dk roof faces and solar attributes $\rightarrow$ on-screen KPIs (DC kWp, annual energy, optional CO$_2$), plus an orthophoto map with a semi-transparent solar overlay.
+  \item \textbf{Out of scope in this alpha version:} exports (PDF/CSV), data-lineage display, portfolio mode (restricted feature), 8760 load/self-consumption, and simple economics.
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{Pictures/prototype.png}
+  \caption{Alpha version UI: DAWA-backed address search, orthophoto map with solar overlay from sologvindinfo., and on-screen KPIs for a selected building.}
+  \label{fig:prototype}
+\end{figure}
+
+\subsection{Feature status }
+\paragraph{Implemented in alpha version:}
+\begin{itemize}
+  \item DAWA-backed address autocomplete + geocoding to coordinates.
+  \item sologvindinfo.dk roof faces + solar attributes fetched per selected address.
+  \item Orthophoto map with solar overlay.
+  \item Derived KPIs shown on screen: DC capacity (kWp), annual energy (kWh), optional CO$_2$ (t/year).
+  \item Basic assumptions inputs with tooltips: power density, packing ratio, DC/AC ratio, and system losses.
+  \item User enters address $\rightarrow$ review roof face(s) $\rightarrow$ on-screen KPIs (Generate brief renders on screen).
+\end{itemize}
+
+\paragraph{Missing in alpha version:}
+\begin{itemize}
+  \item PDF and CSV export, two-page brief with sources and assumptions.
+  \item Data-lineage display in UI and exports (source names and retrieval dates).
+  \item Portfolio mode, batch ranking with background jobs and caching.
+  \item Representative 8760 load profiles, self-consumption and export simulation.
+  \item Simple economics, payback with low/base/high bands, tariff and price inputs from Energi Data Service.
+  \item Table $\leftrightarrow$ map linking, click a face row to select the polygon, and map click selects the row.
+  \item Confidence bands on KPIs and charts.
+  \item User flow: User enters address $\rightarrow$ brief $\rightarrow$ Export PDF / Copy link.
+  \item  Portfolio screening mode.
+\end{itemize}
+
+\subsection{Architecture \& data flow in alpha version}
+\begin{itemize}
+  \item \textbf{Pipeline:} Address $\rightarrow$ DAWA geocode $\rightarrow$ coordinates $\rightarrow$ sologvindinfo.dk roof faces and attributes $\rightarrow$ KPI calculation.
+  \item \textbf{Sizing/yield:} derived from sologvindinfo.dk roof potential, presented as \textbf{indicative}.
+\end{itemize}

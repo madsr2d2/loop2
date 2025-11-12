@@ -1,0 +1,37 @@
+% \usepackage[utf8]{inputenc}        % (XeLaTeX: don't use inputenc)
+\usepackage{fontspec}
+
+\usepackage[]{geometry}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{titlesec}
+%\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{listings}
+
+\PassOptionsToPackage{hyphens}{url} % break long URLs at hyphens
+
+% --- Bibliography (biblatex + biber) ---
+\usepackage{csquotes} % recommended with babel + biblatex
+\usepackage[backend=bibtex,style=numeric,sorting=none]{biblatex}
+\addbibresource{bibliography.bib}   % <-- REPLACE \bibliography with this
+
+\usepackage[english]{babel}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{calc}
+\usepackage{blindtext}
+\usepackage{comment}
+\usepackage{xparse}
+
+% Load hyperref as late as possible
+\usepackage{hyperref}
+% \usepackage{url}  % not needed; hyperref already loads url
+\usepackage{cleveref}
