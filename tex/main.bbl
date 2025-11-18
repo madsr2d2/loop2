@@ -17,102 +17,24 @@
 \endgroup
 
 \datalist[entry]{none/global//global/global}
-  \entry{HFE}{online}{}
-    \list{publisher}{1}{%
-      {Energiforum Sydhavn / Sol over Byen}%
+  \entry{eaas-demo}{online}{}
+    \name{author}{1}{}{%
+      {{hash=AE}{%
+         family={A/S},
+         familyi={A\bibinitperiod},
+         given={Egholm},
+         giveni={E\bibinitperiod},
+      }}%
     }
+    \strng{namehash}{AE1}
+    \strng{fullhash}{AE1}
+    \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{title}{Håndbog for Energifællesskaber}
+    \field{title}{Energy-Aware Assistance System Demonstration}
     \verb{url}
-    \verb https://eboconsult.dk/wp-content/uploads/2022/09/Ha%CC%8Andbog-for-En
-    \verb ergifaellesskaber-version-2-final-rev-6-nov-2021-1.pdf
+    \verb https://www.egholm.dk/eaas-demo
     \endverb
-  \endentry
-
-  \entry{KEF}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{Egenproduktion i boligforeninger og energifællesskaber -
-  VE-udbygning, samfundsøkonomi og effekt ved forskellige nettilslutninger}
-    \verb{url}
-    \verb https://www.ft.dk/samling/20211/almdel/kef/bilag/434/2607364.pdf
-    \endverb
-  \endentry
-
-  \entry{erfaringer}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{Erfaringer fra beboelsesejendomme, som har opsat solceller
-  på taget}
-    \verb{url}
-    \verb https://www.ft.dk/samling/20211/almdel/kef/bilag/434/2607364.pdf
-    \endverb
-  \endentry
-
-  \entry{webpage1}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{energifaellesskaber.dk}
-    \verb{url}
-    \verb https://www.energifaellesskaber.dk/
-    \endverb
-  \endentry
-
-  \entry{bjorni1}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{elberegner.dk}
-    \verb{url}
-    \verb https://elberegner.dk/guides/kwh-pris/?utm_
-    \endverb
-  \endentry
-
-  \entry{bjorni2}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{dst.dk}
-    \verb{url}
-    \verb https://www.dst.dk/en/Statistik/emner/miljoe-og-energi/energiforbrug-
-    \verb og-energipriser/energipriser?utm_
-    \endverb
-  \endentry
-
-  \entry{bjorni3}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{andelenergi.dk}
-    \verb{url}
-    \verb https://andelenergi.dk/solceller/tilmeld-produktionsaftale/?utm_
-    \endverb
-  \endentry
-
-  \entry{bjorni4}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{FREMSKRIVNING AF ENERGINETS ELTARIFFER 2024-2026}
-    \verb{url}
-    \verb https://energinet.dk/media/oifh0mha/23-07493-5-publikationen-fremskri
-    \verb vning-af-energinets-eltariffer-2024-2026-1.pdf?utm_source=chatgpt.com
-    \endverb
-  \endentry
-
-  \entry{bjorni5}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{andelenergi.dk}
-    \verb{url}
-    \verb https://energinet.dk/om-nyheder/nyheder/2023/05/02/energinet-indforer
-    \verb -ojeblikstarifering-og-harmoniserer-tarifbetalingen-for-alle-solcelle
-    \verb anlaeg-og-andre-egenproducenter-af-el/?utm_
-    \endverb
-  \endentry
-
-  \entry{bjorni6}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{1komma5.dk}
-    \verb{url}
-    \verb https://1komma5.dk/solceller/solceller-effekt?utm_
-    \endverb
-  \endentry
-
-  \entry{bjorni7}{online}{}
-    \field{labeltitlesource}{title}
-    \field{title}{greenmatch.dk}
-    \verb{url}
-    \verb https://www.greenmatch.dk/solceller?utm_=
-    \endverb
+    \field{year}{2024}
   \endentry
 \enddatalist
 \endinput

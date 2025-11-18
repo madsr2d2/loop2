@@ -17,21 +17,21 @@
 
 \newcommand{\dtulogocolour}{white} % Colour of the DTU logo: white, black or dtured
 \newcommand{\frontpagetextcolour}{white} % front page text colour: white or black
-\colorlet{frontbackcolor}{orange} % Set the background colour of the front- and back page. Choose the colour so it matches the main colour of front page picture
+\colorlet{frontbackcolor}{green} % Set the background colour of the front- and back page. Choose the colour so it matches the main colour of front page picture
 
 % DTU colours for diagrams
 % You might want to make the front/back page background colour the first colour in the plot cycle list.
 \pgfplotscreateplotcyclelist{DTU}{%
-dtured,         fill=dtured,        \\%
-blue,           fill=blue,          \\%
-brightgreen,    fill=brightgreen    \\%
-navyblue,       fill=navyblue       \\%
-yellow,         fill=yellow         \\%
-orange,         fill=orange         \\%
-grey,           fill=grey           \\%
-red,            fill=red            \\%
-green,          fill=green          \\%
-purple,         fill=purple         \\%
+	dtured,         fill=dtured,        \\%
+	blue,           fill=blue,          \\%
+	brightgreen,    fill=brightgreen    \\%
+	navyblue,       fill=navyblue       \\%
+	yellow,         fill=yellow         \\%
+	orange,         fill=orange         \\%
+	grey,           fill=grey           \\%
+	red,            fill=red            \\%
+	green,          fill=green          \\%
+	purple,         fill=purple         \\%
 }
 
 
@@ -42,24 +42,24 @@ purple,         fill=purple         \\%
 \renewcommand\thepart{Part \Roman{part}}
 \IfFontExistsTF{NeoSansPro-Medium.otf}
 { %If True set headings to NeoSans Pro
-\newfontface\NeoSansProReg{NeoSansPro-Regular.otf}
-\newfontface\NeoSansProMed{NeoSansPro-Medium.otf}
-\titleformat{\part}[display]{\NeoSansProMed \huge \centering}{\NeoSansProMed \Huge \thepart}{1em}{\thispagestyle{empty}}{}
-\titleformat{\chapter}{\NeoSansProMed\huge}{\thechapter}{1em}{\raggedright}
-\titleformat{\section}{\NeoSansProMed\Large}{\thesection}{1em}{\raggedright}
-\titleformat{\subsection}{\NeoSansProMed\large}{\thesubsection}{1em}{\raggedright}
-\titleformat{\subsubsection}{\NeoSansProMed\normalsize}{\thesubsubsection}{1em}{\raggedright}
-\newcommand\TitleFont[1]{{\NeoSansProMed #1}}
-\newcommand\titlefont[1]{{\NeoSansProReg #1}}
+	\newfontface\NeoSansProReg{NeoSansPro-Regular.otf}
+	\newfontface\NeoSansProMed{NeoSansPro-Medium.otf}
+	\titleformat{\part}[display]{\NeoSansProMed \huge \centering}{\NeoSansProMed \Huge \thepart}{1em}{\thispagestyle{empty}}{}
+	\titleformat{\chapter}{\NeoSansProMed\huge}{\thechapter}{1em}{\raggedright}
+	\titleformat{\section}{\NeoSansProMed\Large}{\thesection}{1em}{\raggedright}
+	\titleformat{\subsection}{\NeoSansProMed\large}{\thesubsection}{1em}{\raggedright}
+	\titleformat{\subsubsection}{\NeoSansProMed\normalsize}{\thesubsubsection}{1em}{\raggedright}
+	\newcommand\TitleFont[1]{{\NeoSansProMed #1}}
+	\newcommand\titlefont[1]{{\NeoSansProReg #1}}
 }
 { % If false
-\titleformat{\part}[display]{\bfseries\huge \centering}{\bfseries\Huge \thepart}{1em}{\thispagestyle{empty}}{}
-\titleformat{\chapter}{\bfseries\huge}{\thechapter}{1em}{\raggedright}
-\titleformat{\section}{\bfseries\Large}{\thesection}{1em}{\raggedright}
-\titleformat{\subsection}{\bfseries\large}{\thesubsection}{1em}{\raggedright}
-\titleformat{\subsubsection}{\bfseries\normalsize}{\thesubsubsection}{1em}{\raggedright}
-\newcommand\TitleFont[1]{{\bfseries #1}}
-\newcommand\titlefont[1]{{#1}}
+	\titleformat{\part}[display]{\bfseries\huge \centering}{\bfseries\Huge \thepart}{1em}{\thispagestyle{empty}}{}
+	\titleformat{\chapter}{\bfseries\huge}{\thechapter}{1em}{\raggedright}
+	\titleformat{\section}{\bfseries\Large}{\thesection}{1em}{\raggedright}
+	\titleformat{\subsection}{\bfseries\large}{\thesubsection}{1em}{\raggedright}
+	\titleformat{\subsubsection}{\bfseries\normalsize}{\thesubsubsection}{1em}{\raggedright}
+	\newcommand\TitleFont[1]{{\bfseries #1}}
+	\newcommand\titlefont[1]{{#1}}
 }
 \urlstyle{sf}
 %\def\UrlFont{\NeoSansProReg}
@@ -78,7 +78,7 @@ purple,         fill=purple         \\%
 
 \makeatletter % Reset chapter numbering for each part
 \@addtoreset{chapter}{part}
-\makeatother  
+\makeatother
 
 % Spacing of titles and captions
 \titlespacing\chapter{0pt}{0pt plus 4pt minus 2pt}{4pt plus 2pt minus 2pt}
@@ -93,20 +93,20 @@ purple,         fill=purple         \\%
 
 % Setup header and footer
 \fancypagestyle{main}{% All normal pages
-    \fancyhead{}
-    \fancyfoot{}
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyfoot[LE,RO]{\footnotesize \thepage}
-    \fancyfoot[RE,LO]{\footnotesize \thesistitle: \thesissubtitle} % - \rightmark
-    \fancyhfoffset[E,O]{0pt}
+	\fancyhead{}
+	\fancyfoot{}
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[LE,RO]{\footnotesize \thepage}
+	\fancyfoot[RE,LO]{\footnotesize \thesistitle: \thesissubtitle} % - \rightmark
+	\fancyhfoffset[E,O]{0pt}
 }
 \fancypagestyle{plain}{% Chapter pages
-    \fancyhead{}
-    \fancyfoot{}
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyfoot[LE,RO]{\footnotesize \thepage}
-    \fancyfoot[RE,LO]{\footnotesize \thesistitle: \thesissubtitle} % - \leftmark
-    \fancyhfoffset[E,O]{0pt}
+	\fancyhead{}
+	\fancyfoot{}
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[LE,RO]{\footnotesize \thepage}
+	\fancyfoot[RE,LO]{\footnotesize \thesistitle: \thesissubtitle} % - \leftmark
+	\fancyhfoffset[E,O]{0pt}
 }
 
 
@@ -114,127 +114,127 @@ purple,         fill=purple         \\%
 \usetikzlibrary{spy}    % For magnifying anything within a tikzpicture, see the line graph
 \usepgfplotslibrary{statistics} % Package for the boxplot
 \pgfplotsset{ % Setup for diagrams
-compat=newest,
-major x grid style={line width=0.5pt,draw=grey},
-major y grid style={line width=0.5pt,draw=grey},
-legend style={at={(0.5,-0.1)}, anchor=north,fill=none,draw=none,legend columns=-1,/tikz/every even column/.append style={column sep=10pt}},
-axis line style={draw=none},
-tick style={draw=none},
-every axis/.append style={ultra thick},
-tick label style={/pgf/number format/assume math mode}, % To apply main font to tick labels (numbers on the axis)
+	compat=newest,
+	major x grid style={line width=0.5pt,draw=grey},
+	major y grid style={line width=0.5pt,draw=grey},
+	legend style={at={(0.5,-0.1)}, anchor=north,fill=none,draw=none,legend columns=-1,/tikz/every even column/.append style={column sep=10pt}},
+	axis line style={draw=none},
+	tick style={draw=none},
+	every axis/.append style={ultra thick},
+	tick label style={/pgf/number format/assume math mode}, % To apply main font to tick labels (numbers on the axis)
 }
 \tikzset{every mark/.append style={scale=1.5}}
 
 
 % Hypersetup
 \hypersetup{
-    pdfauthor={\thesisauthor},
-    pdftitle={\thesistitle},
-    pdfsubject={\thesissubtitle},
-    pdfdisplaydoctitle,
-    bookmarksnumbered=true,
-    bookmarksopen,
-    breaklinks,
-    linktoc=all,
-    plainpages=false,
-    unicode=true,
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=blue,      
-    urlcolor=blue,
-    citecolor=blue,
-    %hidelinks,                        % Do not show boxes or coloured links.
+	pdfauthor={\thesisauthor},
+	pdftitle={\thesistitle},
+	pdfsubject={\thesissubtitle},
+	pdfdisplaydoctitle,
+	bookmarksnumbered=true,
+	bookmarksopen,
+	breaklinks,
+	linktoc=all,
+	plainpages=false,
+	unicode=true,
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	urlcolor=blue,
+	citecolor=blue,
+	%hidelinks,                        % Do not show boxes or coloured links.
 }
 
 
 % Listings setup
 \lstset{
-    basicstyle=\footnotesize\ttfamily,% the size of the fonts that are used for the code
-    commentstyle=\color{green},       % comment style
-    keywordstyle=\bfseries\ttfamily\color{blue}, % keyword style
-    numberstyle=\sffamily\tiny\color{grey}, % the style that is used for the line-numbers
-    stringstyle=\color{purple},       % string literal style
-    rulecolor=\color{grey},           % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-    breakatwhitespace=false,          % sets if automatic breaks should only happen at whitespace
-    breaklines=true,                  % sets automatic line breaking
-    captionpos=b,                     % sets the caption-position to bottom
-    deletekeywords={},                % if you want to delete keywords from the given language
-    escapeinside={\%*}{*)},           % if you want to add LaTeX within your code
-    frame=single,                     % adds a frame around the code
-    xleftmargin=4pt, 
-    morekeywords={*,...},             % if you want to add more keywords to the set
-    numbers=left,                     % where to put the line-numbers; possible values are (none, left, right)
-    numbersep=10pt,                   % how far the line-numbers are from the code
-    showspaces=false,                 % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-    showstringspaces=false,           % underline spaces within strings only
-    showtabs=false,                   % show tabs within strings adding particular underscores
-    stepnumber=1,                     % the step between two line-numbers. If it's 1, each line will be numbered
-    tabsize=2,                        % sets default tabsize to 2 spaces
-    title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+	basicstyle=\footnotesize\ttfamily,% the size of the fonts that are used for the code
+	commentstyle=\color{green},       % comment style
+	keywordstyle=\bfseries\ttfamily\color{blue}, % keyword style
+	numberstyle=\sffamily\tiny\color{grey}, % the style that is used for the line-numbers
+	stringstyle=\color{purple},       % string literal style
+	rulecolor=\color{grey},           % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	breakatwhitespace=false,          % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                  % sets automatic line breaking
+	captionpos=b,                     % sets the caption-position to bottom
+	deletekeywords={},                % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},           % if you want to add LaTeX within your code
+	frame=single,                     % adds a frame around the code
+	xleftmargin=4pt,
+	morekeywords={*,...},             % if you want to add more keywords to the set
+	numbers=left,                     % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=10pt,                   % how far the line-numbers are from the code
+	showspaces=false,                 % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,           % underline spaces within strings only
+	showtabs=false,                   % show tabs within strings adding particular underscores
+	stepnumber=1,                     % the step between two line-numbers. If it's 1, each line will be numbered
+	tabsize=2,                        % sets default tabsize to 2 spaces
+	title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 % Listing style for R
 \lstdefinestyle{Rstyle}{
-    language=R,
-    basicstyle=\ttfamily\small,
-    commentstyle=\color{green},
-    keywordstyle=\color{blue},
-    numberstyle=\tiny\color{gray},
-    numbers=left,
-    stepnumber=1,
-    showstringspaces=false,
-    breaklines=true,
-    frame=single,
-    backgroundcolor=\color{yellow!10},
-    literate=%
-        {~}{{$\sim$}}1
+	language=R,
+	basicstyle=\ttfamily\small,
+	commentstyle=\color{green},
+	keywordstyle=\color{blue},
+	numberstyle=\tiny\color{gray},
+	numbers=left,
+	stepnumber=1,
+	showstringspaces=false,
+	breaklines=true,
+	frame=single,
+	backgroundcolor=\color{yellow!10},
+	literate=%
+		{~}{{$\sim$}}1
 }
 
 % Signature field
 \newlength{\myl}
 \newcommand{\namesigdatehrule}[1]{\par\tikz \draw [black, densely dotted, very thick] (0.04,0) -- (#1,0);\par}
 \newcommand{\namesigdate}[2][]{%
-\settowidth{\myl}{#2}
-\setlength{\myl}{\myl+10pt}
-\begin{minipage}{\myl}%
-\begin{center}
-    \vspace{1cm}
-    #2  % Insert name from the command eg. \namesigdate{\authorname}
-    
-    % uncomment this skip when using picture of signature
-    %\vspace{1.5cm} % Spacing between name and signature line 
+	\settowidth{\myl}{#2}
+	\setlength{\myl}{\myl+10pt}
+	\begin{minipage}{\myl}%
+		\begin{center}
+			\vspace{1cm}
+			#2  % Insert name from the command eg. \namesigdate{\authorname}
 
-    % uncomment the following to include picture of signature
-    \includegraphics[width=5cm,keepaspectratio]{Pictures/mySig.png}
-    
-    \namesigdatehrule{\myl}\smallskip % Signature line and a small skip
-    %\small \textit{Signature} % Text under the signature line "Signature"
-    %\vspace{1.0cm} % Spacing between "Signature" and the date line
-    %\namesigdatehrule{\myl}\smallskip % Date line and a small skip
-    %\small \textit{Date} % Text under date line "Date" 
-    \today
-\end{center}
-\end{minipage}
+			% uncomment this skip when using picture of signature
+			%\vspace{1.5cm} % Spacing between name and signature line 
+
+			% uncomment the following to include picture of signature
+			\includegraphics[width=5cm,keepaspectratio]{Pictures/mySig.png}
+
+			\namesigdatehrule{\myl}\smallskip % Signature line and a small skip
+			%\small \textit{Signature} % Text under the signature line "Signature"
+			%\vspace{1.0cm} % Spacing between "Signature" and the date line
+			%\namesigdatehrule{\myl}\smallskip % Date line and a small skip
+			%\small \textit{Date} % Text under date line "Date" 
+			\today
+		\end{center}
+	\end{minipage}
 }
 
 % For the back page: cleartoleftpage
 \newcommand*\cleartoleftpage{%
-  \clearpage
-  \ifodd\value{page}\hbox{}\newpage\fi
+	\clearpage
+	\ifodd\value{page}\hbox{}\newpage\fi
 }
 
 % One author box: date defaults to \today
 % Usage: \authorentry[<Date>]{<Name>}{<Student No.>}
 \NewDocumentCommand{\authorentry}{ O{\today} m m }{%
-  \begin{minipage}[t]{0.3\linewidth}
-    \centering
-    \textbf{#2}\\
-    \small Student no. #3\\
-    \small #1
-  \end{minipage}%
+	\begin{minipage}[t]{0.3\linewidth}
+		\centering
+		\textbf{#2}\\
+		\small Student no. #3\\
+		\small #1
+	\end{minipage}%
 }
 
 % Convenience wrapper to lay out authors on one line (auto spacing)
 % Usage: \authorsline{ \authorentry{Alice}{s123456} \authorentry{Bob}{s654321} }
 \newcommand{\authorsline}[1]{%
-  \noindent #1\par
+	\noindent #1\par
 }
