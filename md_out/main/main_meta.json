@@ -1,0 +1,1109 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Innovation Pilot report - Loop 2 - Group 58\nCompany Proposal for Egholm A/S",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          37.159000396728516,
+          143.07421875
+        ],
+        [
+          535.6770629882812,
+          143.07421875
+        ],
+        [
+          535.6770629882812,
+          198.20135498046875
+        ],
+        [
+          37.159000396728516,
+          198.20135498046875
+        ]
+      ]
+    },
+    {
+      "title": "1 Executive summary",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          98.015625,
+          30.1640625
+        ],
+        [
+          256.2765197753906,
+          30.1640625
+        ],
+        [
+          256.2765197753906,
+          45.52783203125
+        ],
+        [
+          98.015625,
+          45.52783203125
+        ]
+      ]
+    },
+    {
+      "title": "2 Introduction",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          98.314453125,
+          50.66015625
+        ],
+        [
+          205.2183837890625,
+          49.11328125
+        ],
+        [
+          205.2183837890625,
+          65.1788330078125
+        ],
+        [
+          98.314453125,
+          65.1788330078125
+        ]
+      ]
+    },
+    {
+      "title": "3 The Hard Nut",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          98.61328125,
+          172.32061767578125
+        ],
+        [
+          211.58810424804688,
+          170.9296875
+        ],
+        [
+          211.58810424804688,
+          186.66680908203125
+        ],
+        [
+          98.61328125,
+          186.66680908203125
+        ]
+      ]
+    },
+    {
+      "title": "4 Proposal Rationale",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          98.61328125,
+          559.58203125
+        ],
+        [
+          251.4705352783203,
+          558.03515625
+        ],
+        [
+          251.4705352783203,
+          574.5038299560547
+        ],
+        [
+          98.61328125,
+          574.5038299560547
+        ]
+      ]
+    },
+    {
+      "title": "4.1 Problem and Vision",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          98.015625,
+          664.3828125
+        ],
+        [
+          239.18557739257812,
+          662.8359375
+        ],
+        [
+          239.18557739257812,
+          676.8505477905273
+        ],
+        [
+          98.015625,
+          676.8505477905273
+        ]
+      ]
+    },
+    {
+      "title": "4.2 Problem Validation",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          98.654296875,
+          238.45703125
+        ],
+        [
+          235.431640625,
+          236.8125
+        ],
+        [
+          235.419677734375,
+          250.8084716796875
+        ],
+        [
+          97.490234375,
+          250.8084716796875
+        ]
+      ]
+    },
+    {
+      "title": "4.3 Proposed Solution",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          98.9453125,
+          409.0771484375
+        ],
+        [
+          234.0567626953125,
+          407.4326171875
+        ],
+        [
+          234.0567626953125,
+          421.76751708984375
+        ],
+        [
+          97.78125,
+          421.76751708984375
+        ]
+      ]
+    },
+    {
+      "title": "4.4 Strategic Benefits",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          98.36328125,
+          628.1933288574219
+        ],
+        [
+          229.4181671142578,
+          627.388671875
+        ],
+        [
+          229.4181671142578,
+          640.1485290527344
+        ],
+        [
+          98.36328125,
+          640.1485290527344
+        ]
+      ]
+    },
+    {
+      "title": "For Operators",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          98.072265625,
+          659.8681640625
+        ],
+        [
+          171.9439697265625,
+          658.2236328125
+        ],
+        [
+          171.9439697265625,
+          670.9983062744141
+        ],
+        [
+          98.072265625,
+          670.9983062744141
+        ]
+      ]
+    },
+    {
+      "title": "For Municipalities and Customers",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          98.36328125,
+          81.404296875
+        ],
+        [
+          274.3913269042969,
+          81.404296875
+        ],
+        [
+          274.3913269042969,
+          93.164306640625
+        ],
+        [
+          98.36328125,
+          93.164306640625
+        ]
+      ]
+    },
+    {
+      "title": "For Egholm",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          98.654296875,
+          151.7080078125
+        ],
+        [
+          159.8130645751953,
+          150.0634765625
+        ],
+        [
+          159.8130645751953,
+          162.9033203125
+        ],
+        [
+          97.490234375,
+          162.9033203125
+        ]
+      ]
+    },
+    {
+      "title": "4.5 Stakeholder Management",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          97.19921875,
+          238.853271484375
+        ],
+        [
+          272.600341796875,
+          237.2236328125
+        ],
+        [
+          272.600341796875,
+          250.8084716796875
+        ],
+        [
+          97.19921875,
+          251.2021484375
+        ]
+      ]
+    },
+    {
+      "title": "4.6 Innovation and Value Proposition",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          99.21299743652344,
+          457.23431396484375
+        ],
+        [
+          317.10955810546875,
+          456.357421875
+        ],
+        [
+          317.10955810546875,
+          469.18951416015625
+        ],
+        [
+          98.072265625,
+          469.18951416015625
+        ]
+      ]
+    },
+    {
+      "title": "4.7 Supporting Insights and Research",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          98.072265625,
+          634.9683532714844
+        ],
+        [
+          322.4176940917969,
+          634.3779296875
+        ],
+        [
+          322.4176940917969,
+          646.9235534667969
+        ],
+        [
+          98.072265625,
+          646.9235534667969
+        ]
+      ]
+    },
+    {
+      "title": "4.8 Solution Validation",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          98.36328125,
+          129.91796875
+        ],
+        [
+          235.40771484375,
+          128.2734375
+        ],
+        [
+          235.40771484375,
+          142.41552734375
+        ],
+        [
+          97.19921875,
+          142.41552734375
+        ]
+      ]
+    },
+    {
+      "title": "5 Prototype",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          98.654296875,
+          307.53363037109375
+        ],
+        [
+          188.49072265625,
+          306.2939453125
+        ],
+        [
+          188.49072265625,
+          321.87982177734375
+        ],
+        [
+          98.654296875,
+          321.9169921875
+        ]
+      ]
+    },
+    {
+      "title": "6 Business and Economic Perspective",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          98.654296875,
+          326.8505859375
+        ],
+        [
+          371.87823486328125,
+          325.2060546875
+        ],
+        [
+          371.87823486328125,
+          341.8047790527344
+        ],
+        [
+          97.490234375,
+          341.8047790527344
+        ]
+      ]
+    },
+    {
+      "title": "7 Further perspectives",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          98.9453125,
+          400.0322265625
+        ],
+        [
+          263.4352722167969,
+          398.3876953125
+        ],
+        [
+          263.4352722167969,
+          415.1297912597656
+        ],
+        [
+          97.78125,
+          415.1297912597656
+        ]
+      ]
+    },
+    {
+      "title": "7.1 Long-term AI Development",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          98.9453125,
+          467.19732666015625
+        ],
+        [
+          280.5505676269531,
+          466.224609375
+        ],
+        [
+          280.5505676269531,
+          479.15252685546875
+        ],
+        [
+          97.78125,
+          479.15252685546875
+        ]
+      ]
+    },
+    {
+      "title": "7.2 Data-Driven Product Evolution",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          98.9453125,
+          569.830078125
+        ],
+        [
+          301.14935302734375,
+          568.185546875
+        ],
+        [
+          301.14935302734375,
+          582.3655395507812
+        ],
+        [
+          97.78125,
+          582.3655395507812
+        ]
+      ]
+    },
+    {
+      "title": "7.3 Multi-Task Optimization",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          98.36328125,
+          660.0743103027344
+        ],
+        [
+          261.7330627441406,
+          659.45703125
+        ],
+        [
+          261.7330627441406,
+          672.0295104980469
+        ],
+        [
+          98.36328125,
+          672.0295104980469
+        ]
+      ]
+    },
+    {
+      "title": "7.4 Gamification and Behavioral Scaling",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          98.015625,
+          30.55078125
+        ],
+        [
+          335.0662841796875,
+          30.55078125
+        ],
+        [
+          335.0662841796875,
+          43.39849853515625
+        ],
+        [
+          98.015625,
+          43.39849853515625
+        ]
+      ]
+    },
+    {
+      "title": "7.5 Integration with Broader Sustainability Initiatives",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          98.015625,
+          121.04296875
+        ],
+        [
+          405.470458984375,
+          119.49609375
+        ],
+        [
+          405.470458984375,
+          133.0625
+        ],
+        [
+          96.8203125,
+          133.0625
+        ]
+      ]
+    },
+    {
+      "title": "7.6 Technical and Market Expansion",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          99.2109375,
+          210.76171875
+        ],
+        [
+          312.2557678222656,
+          209.21484375
+        ],
+        [
+          312.2557678222656,
+          222.72650146484375
+        ],
+        [
+          98.015625,
+          222.72650146484375
+        ]
+      ]
+    },
+    {
+      "title": "8 Conclusion",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          98.61328125,
+          346.88671875
+        ],
+        [
+          199.65206909179688,
+          345.33984375
+        ],
+        [
+          199.65206909179688,
+          361.5428161621094
+        ],
+        [
+          98.61328125,
+          361.5428161621094
+        ]
+      ]
+    },
+    {
+      "title": "A Mail from Eggholm A/S",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          98.912109375,
+          365.8359375
+        ],
+        [
+          280.93817138671875,
+          364.2890625
+        ],
+        [
+          280.93817138671875,
+          381.46881103515625
+        ],
+        [
+          98.912109375,
+          381.46881103515625
+        ]
+      ]
+    },
+    {
+      "title": "Bibliography",
+      "heading_level": null,
+      "page_id": 10,
+      "polygon": [
+        [
+          99.21299743652344,
+          30.9375
+        ],
+        [
+          186.89697265625,
+          29.390625
+        ],
+        [
+          186.89697265625,
+          45.52783203125
+        ],
+        [
+          99.21299743652344,
+          45.52783203125
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          9
+        ],
+        [
+          "Line",
+          5
+        ],
+        [
+          "Picture",
+          2
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          181
+        ],
+        [
+          "TableCell",
+          121
+        ],
+        [
+          "Line",
+          44
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "TableOfContents",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          116
+        ],
+        [
+          "Line",
+          47
+        ],
+        [
+          "Text",
+          9
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Reference",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          116
+        ],
+        [
+          "Line",
+          45
+        ],
+        [
+          "ListItem",
+          8
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "Reference",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          105
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "ListItem",
+          11
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "ListGroup",
+          4
+        ],
+        [
+          "Reference",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          116
+        ],
+        [
+          "Line",
+          40
+        ],
+        [
+          "ListItem",
+          13
+        ],
+        [
+          "Text",
+          9
+        ],
+        [
+          "SectionHeader",
+          5
+        ],
+        [
+          "ListGroup",
+          4
+        ],
+        [
+          "Reference",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          101
+        ],
+        [
+          "Line",
+          44
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "ListItem",
+          6
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "Reference",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 7,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          102
+        ],
+        [
+          "Line",
+          43
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "Reference",
+          4
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 8,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          114
+        ],
+        [
+          "Line",
+          45
+        ],
+        [
+          "Text",
+          11
+        ],
+        [
+          "SectionHeader",
+          5
+        ],
+        [
+          "Reference",
+          5
+        ],
+        [
+          "ListItem",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 9,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          31
+        ],
+        [
+          "Line",
+          12
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 10,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          17
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/main"
+}

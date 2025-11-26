@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EAAS Poster - Group 58 (UI centered)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #e7efff;
+  }
+  .page {
+    width: 1300px;
+    min-height: 1800px;
+    margin: 24px auto;
+    background: #ffffff;
+    border-radius: 32px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .top {
+    padding: 28px 40px 18px 40px;
+    background: radial-gradient(circle at top left, #e8fff1 0, #e6f2ff 40%, #ffffff 100%);
+    border-bottom: 1px solid #dde7f2;
+  }
+  .top-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 28px;
+    align-items: center;
+  }
+  .title-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .title-line {
+    font-size: 38px;
+    font-weight: 900;
+    color: #16353a;
+    letter-spacing: 0.03em;
+  }
+  .title-line span.accent {
+    color: #198754;
+  }
+  .subtitle {
+    font-size: 20px;
+    color: #425c64;
+  }
+  .subtitle span {
+    font-weight: 600;
+  }
+  .meta {
+    font-size: 14px;
+    color: #607b84;
+  }
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .chip {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    background: #e8f5e9;
+    color: #225b37;
+    border: 1px solid #c9e5cf;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .chip span.emoji {
+    font-size: 18px;
+  }
+  .grade-badge {
+    flex: 0 0 140px;
+    height: 140px;
+    border-radius: 28px;
+    background: #16353a;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+    text-align: center;
+    padding: 10px;
+  }
+  .grade-badge .emoji {
+    font-size: 40px;
+    margin-bottom: 6px;
+  }
+  .grade-badge .txt-main {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+  .grade-badge .txt-sub {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+
+  /* MAIN CONTENT */
+  .content {
+    padding: 22px 34px 28px 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* CENTERED UI PROTOTYPE */
+  .prototype-section {
+    margin: 4px auto 10px auto;
+    width: 100%;
+    max-width: 1100px;
+    background: #f4f9ff;
+    border-radius: 26px;
+    border: 2px solid #c4d9f2;
+    padding: 18px 20px 20px 20px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .prototype-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .prototype-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #16353a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prototype-title span.emoji {
+    font-size: 30px;
+  }
+  .prototype-caption {
+    font-size: 13px;
+    color: #546872;
+  }
+  .prototype-hint {
+    font-size: 12px;
+    color: #6e8690;
+    text-align: right;
+  }
+  .prototype-image-area {
+    margin-top: 4px;
+    display: flex;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .prototype-image-slot {
+    flex: 2;
+    min-height: 260px;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 3px dashed #9ebee2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a8d97;
+    font-size: 14px;
+    text-align: center;
+    padding: 12px;
+  }
+  .prototype-image-slot span.big-emoji {
+    font-size: 50px;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .prototype-notes {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .note-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 8px 10px;
+    border: 1px solid #d7e8f3;
+    font-size: 12px;
+    color: #27424a;
+  }
+  .note-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .note-title span {
+    font-size: 18px;
+  }
+
+  /* N A B CARDS */
+  .row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 16px;
+  }
+  .card {
+    background: #fcfefe;
+    border-radius: 18px;
+    padding: 14px 16px 14px 16px;
+    border: 1px solid #e0efe5;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bubble {
+    min-width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #198754;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #12342a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-title span.emoji {
+    font-size: 22px;
+  }
+  .card-sub {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #5c7e6e;
+  }
+
+  p, li {
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: #2f3f44;
+  }
+  ul {
+    margin: 0 0 4px 0;
+    padding-left: 18px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f2faf4;
+    color: #245a3a;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+  .tag span {
+    font-size: 16px;
+  }
+
+  .highlight-box {
+    background: #f9fef9;
+    border-radius: 12px;
+    padding: 8px 10px;
+    border: 1px dashed #cfe8d6;
+    font-size: 12.5px;
+  }
+
+  .two-col-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 5px 10px;
+    margin-top: 4px;
+  }
+  .soft-box {
+    background: #f4faf6;
+    border-radius: 12px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  .soft-title {
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: #1d463b;
+  }
+
+  .mini-note {
+    font-size: 11.5px;
+    color: #5b7076;
+    margin-top: 6px;
+  }
+
+  .bottom-row {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 16px;
+  }
+
+  .footer {
+    border-top: 1px solid #e1ebf0;
+    background: #f7fbff;
+    padding: 12px 34px 18px 34px;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    font-size: 11.5px;
+    color: #54646b;
+  }
+  .footer-title {
+    font-weight: 700;
+    color: #12342a;
+    margin-bottom: 2px;
+  }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="top">
+    <div class="top-inner">
+      <div class="title-block">
+        <div class="title-line">Energy-Aware Assistance System <span class="accent">(EAAS)</span> ⚡🚜</div>
+        <div class="subtitle">Et <span>UI-baseret</span> nudging-system, der hjælper E-Traktor-operatører med at køre energieffektivt – uden at miste power 💚</div>
+        <div class="meta">Innovation Pilot · Loop 2 · Egholm A/S case · Gruppe 58</div>
+        <div class="chip-row">
+          <div class="chip"><span class="emoji">🔍</span> Need · adfærd frem for hardware</div>
+          <div class="chip"><span class="emoji">🎨</span> Approach · farvekodet interface</div>
+          <div class="chip"><span class="emoji">⚡</span> Benefit · længere runtime &amp; lavere omkostninger</div>
+          <div class="chip"><span class="emoji">📊</span> Data · klar til telematik &amp; AI</div>
+        </div>
+      </div>
+      <div class="grade-badge">
+        <div class="emoji">🏆</div>
+        <div class="txt-main">12</div>
+        <div class="txt-sub">MÅL: KLAR, FARVERIG &amp;<br>HUMAN-CENTRED POSTER</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CENTERED PROTOTYPE -->
+  <main class="content">
+    <section class="prototype-section">
+      <div class="prototype-header">
+        <div>
+          <div class="prototype-title">
+            <span class="emoji">🎛️</span>
+            <span>Vores UI-prototype – hjertet i EAAS</span>
+          </div>
+          <div class="prototype-caption">
+            Interface’et oversætter teknisk energidata til <strong>farver, symboler og små hints</strong>, som støtter operatøren i øjeblikket.
+          </div>
+        </div>
+        <div class="prototype-hint">
+          <strong>Praktisk:</strong> Her indsætter I jeres eget UI-billede (PNG/JPG) af EAAS-displayet.
+        </div>
+      </div>
+
+      <div class="prototype-image-area">
+        <div class="prototype-image-slot">
+          <div>
+            <span class="big-emoji">🖼️</span>
+            <div><strong>INDLÆG JERES UI HER</strong><br>Eksportér jeres mockup som billede og placer det i dette felt,<br>så UI’et står midt på plakaten og stjæler showet ✨</div>
+          </div>
+        </div>
+        <div class="prototype-notes">
+          <div class="note-card">
+            <div class="note-title"><span>🎨</span>Farvekoder</div>
+            <p>Grøn = energieffektiv kørsel<br>Gul = ok, men muligt at spare<br>Rød = unødigt højt forbrug</p>
+          </div>
+          <div class="note-card">
+            <div class="note-title"><span>🧠</span>Adfærdsprincip</div>
+            <p>UI’et giver <strong>light nudges</strong> i stedet for forbud: operatøren har altid kontrol, men bliver guidet mod smartere valg.</p>
+          </div>
+          <div class="note-card">
+            <div class="note-title"><span>📈</span>Data bagved</div>
+            <p>Hvert valg (power, opgave, underlag) kan logges og bruges til <strong>fremtidig telematik og AI-optimering</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEED / APPROACH / BENEFIT -->
+    <section class="row-3">
+      <!-- NEED -->
+      <article class="card">
+        <div class="card-header">
+          <div class="bubble">N</div>
+          <div>
+            <div class="card-title"><span class="emoji">🔍</span>Need</div>
+            <div class="card-sub">Hvorfor er der et problem?</div>
+          </div>
+        </div>
+
+        <div class="tag"><span>🌍</span>Baggrund</div>
+        <ul>
+          <li>Egholm bygger el-drevne redskabsbærere til kommuner.</li>
+          <li>Batteriet i E-Traktoren ≈ <strong>25% af produktionsprisen</strong>.</li>
+          <li>Kunder efterspørger længere driftstid, lavere omkostninger og mindre CO₂.</li>
+        </ul>
+
+        <div class="tag"><span>⚠️</span>Udfordring</div>
+        <ul>
+          <li>Ingen telematik/GPS → svag indsigt i faktisk brug og energispild.</li>
+          <li>Mange operatører kører på <strong>max power som standard</strong>.</li>
+          <li>Fokus er “få opgaven løst” – ikke energioptimering.</li>
+        </ul>
+
+        <div class="tag"><span>🧩</span>Hard Nut</div>
+        <div class="highlight-box">
+          Hvordan kan vi støtte og påvirke brugerens adfærd, så E-Traktoren bruges mere energieffektivt i hverdagen – uden at det føles som en begrænsning?
+        </div>
+      </article>
+
+      <!-- APPROACH -->
+      <article class="card">
+        <div class="card-header">
+          <div class="bubble">A</div>
+          <div>
+            <div class="card-title"><span class="emoji">💡</span>Approach</div>
+            <div class="card-sub">Hvad er vores løsning?</div>
+          </div>
+        </div>
+
+        <div class="tag"><span>🎯</span>Vision</div>
+        <ul>
+          <li>Gøre energieffektiv kørsel til det <strong>nemme standardvalg</strong> for operatøren.</li>
+          <li>Samtidig opbygge et <strong>datagrundlag</strong> til telematik og AI.</li>
+        </ul>
+
+        <div class="tag"><span>⚡</span>EAAS – UI-baseret hjælper</div>
+        <ul>
+          <li><strong>Farvekodet bar</strong> viser, når valgt power er unødvendigt højt.</li>
+          <li><strong>Kontekst-profiler</strong> (fx vådt græs, løv) tilpasser anbefalingerne.</li>
+          <li><strong>Light nudging</strong> – operatøren har stadig fuld kontrol.</li>
+        </ul>
+
+        <p class="mini-note">UI’et er designet til travle hverdage: ét hurtigt blik skal være nok til at køre smartere.</p>
+      </article>
+
+      <!-- BENEFIT -->
+      <article class="card">
+        <div class="card-header">
+          <div class="bubble">B</div>
+          <div>
+            <div class="card-title"><span class="emoji">✅</span>Benefit</div>
+            <div class="card-sub">Hvem vinder – og hvordan?</div>
+          </div>
+        </div>
+
+        <div class="two-col-list">
+          <div class="soft-box">
+            <div class="soft-title">Operatører 👷‍♀️👷‍♂️</div>
+            <ul>
+              <li>Enkel, genkendelig styring.</li>
+              <li>Mindre gætværk om power-niveau.</li>
+              <li>Bedre fornemmelse af resterende runtime.</li>
+            </ul>
+          </div>
+          <div class="soft-box">
+            <div class="soft-title">Kommuner 🏙️</div>
+            <ul>
+              <li>Lavere energiforbrug og driftsomkostninger.</li>
+              <li>Mere arbejde pr. opladning.</li>
+              <li>Mulighed for dokumentation af besparelser og CO₂.</li>
+            </ul>
+          </div>
+          <div class="soft-box">
+            <div class="soft-title">Egholm 🏭</div>
+            <ul>
+              <li>Konkurrencefordel i el-maskine markedet.</li>
+              <li>Mindre behov for dyre testrejser.</li>
+              <li>Stærkere ESG-historie med data.</li>
+            </ul>
+          </div>
+          <div class="soft-box">
+            <div class="soft-title">På sigt 🌱</div>
+            <ul>
+              <li>AI-ruteoptimering og smart charging.</li>
+              <li>Opgavespecifikke UI-profiler.</li>
+              <li>Gamification og smart-city integration.</li>
+            </ul>
+          </div>
+        </div>
+
+      </article>
+    </section>
+
+    <!-- COMPETITION + METHODS -->
+    <section class="bottom-row">
+      <article class="card">
+        <div class="card-header">
+          <div class="bubble">C</div>
+          <div>
+            <div class="card-title"><span class="emoji">🆚</span>Competition</div>
+            <div class="card-sub">Hvorfor ikke “bare” hardware?</div>
+          </div>
+        </div>
+        <ul>
+          <li><strong>Kun hardware-opgraderinger</strong> → forbedrer testen, men ikke nødvendigvis daglig brug.</li>
+          <li><strong>Kun træning &amp; manualer</strong> → effekten falder over tid og er svær at måle.</li>
+          <li><strong>EAAS</strong> → lægger et UI-lag oven på eksisterende teknik, som støtter adfærd hver dag – og bygger data til fremtiden.</li>
+        </ul>
+        <p class="mini-note">EAAS er derfor både en <strong>adfærds-løsning</strong> og en <strong>strategisk data-platform</strong>.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <div class="bubble">M</div>
+          <div>
+            <div class="card-title"><span class="emoji">🧪</span>Metode &amp; team</div>
+            <div class="card-sub">Hvordan nåede vi hertil?</div>
+          </div>
+        </div>
+        <ul>
+          <li>Mail og besøg hos Egholm (CEO &amp; ingeniører).</li>
+          <li>Interviews med operatører om daglig brug, vaner og frustrationer.</li>
+          <li>Forståelse af batteri-tests (fx vådt vs. tørt græs, forskellige underlag).</li>
+          <li>Low-fi UI-skitser og feedback på display-idéer.</li>
+        </ul>
+        <p class="mini-note"><strong>Gruppe 58 – Innovation Pilot, DTU</strong><br>Tilføj jeres navne og uddannelser på den endelige plakat 👥</p>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div>
+      <div class="footer-title">Key message</div>
+      EAAS er et blødt, UI-baseret lag, der hjælper operatører med at køre smartere i nuet – og samtidig bygger det datagrundlaget til Egholms næste generation af telematik og AI.
+    </div>
+    <div>
+      <div class="footer-title">Kilder</div>
+      Egholm CEO-mail &amp; besøg · Operatørinterviews · Innovation Pilot Loop 1 &amp; 2.
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

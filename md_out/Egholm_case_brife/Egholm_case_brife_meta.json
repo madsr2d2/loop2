@@ -1,0 +1,87 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Description of innovation case",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          90.24609375,
+          117.5625
+        ],
+        [
+          270.75,
+          117.5625
+        ],
+        [
+          270.75,
+          131.484375
+        ],
+        [
+          89.05078125,
+          131.484375
+        ]
+      ]
+    },
+    {
+      "title": "Innovation question",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          100.107421875,
+          493.83984375
+        ],
+        [
+          189.75,
+          492.29296875
+        ],
+        [
+          189.75,
+          502.5
+        ],
+        [
+          100.107421875,
+          502.5
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          48
+        ],
+        [
+          "Span",
+          16
+        ],
+        [
+          "Text",
+          12
+        ],
+        [
+          "Picture",
+          6
+        ],
+        [
+          "SectionHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Egholm_case_brife"
+}

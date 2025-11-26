@@ -1,0 +1,21 @@
+The company’s original challenge focused on improving the everyday energy efficiency of their E-Traktor and lowering operational costs for professional users, without negatively affecting workflow or user experience. The company operates in a market where electric machinery is increasingly attractive due to regulatory pressure, sustainability goals, and long-term cost considerations. However, high up-front investment, range limitations, and uncertainty about real-world performance still influence customer expectations. This makes efficient use of the electric drivetrain a central competitive parameter. 
+
+Through early desk research and conversations with company representatives, we gained a clearer picture of the tractor’s use context. The E-Traktor is typically operated by municipal workers, landscape contractors, and facility maintenance personnel. These operators often work under time pressure, perform repetitive tasks, and do not always have strong incentives to adjust machine settings for optimal energy usage. We believe that many users tend to run the tractor at maximum power, regardless of weather, task type, or terrain conditions, even in situations where lower power would be sufficient. 
+
+During the first diamond phase, we explored this behaviour further. Interviews with operators highlighted several recurring themes?: / We debated and settled on the following beliefs?: 
+• Energy optimisation is not a priority for most users. 
+• Operators value simplicity and reliability over fine-tuning settings. 
+• Power adjustments are perceived as a potential limitation (“risk of the machine feeling too weak”). 
+• Users often lack real-time feedback on how driving behaviour affects energy consumption. 
+• The responsibility for efficient usage is diffuse: the municipality pays the energy bill, but the operator decides the power setting. 
+
+These insights shifted our focus from purely technical optimisation to understanding human behaviour around the machine. The root issue is not the tractor’s capability, but rather how users make decisions in daily operation. This led us to redefine the challenge: instead of optimising the tractor itself, we needed to support and motivate operators to use the available power modes more intelligently. 
+
+Based on this, we formulated the Hard Nut as: 
+Hvordan kan vi påvirke og støtte brugerens adfærd, så E-Traktoren bruges mere energieffektivt i daglig drift – uden at det opleves som en begrænsning – og dermed bidrage til lavere driftsomkostninger og øget markedsværdi? 
+
+This reframed problem places the operator—not the machine—as the primary problem owner. The company’s technical team is the challenge owner, but the real behavioural inefficiencies stem from operators who desire straightforward, predictable performance and therefore default to maximum power. At the same time, municipalities and contractors are key external stakeholders who ultimately feel the economic impact of inefficient usage. 
+
+Our research showed that different cutting conditions require different power levels: wet grass demands higher torque while dry grass generally does not. However, operators rarely adjust power based on these variations. This pointed us toward a solution that provides direct, intuitive, and non-intrusive feedback to the user at the moment a suboptimal choice is made. 
+
+Through this reasoning, the Hard Nut became an interaction design challenge: creating a system that gently nudges users toward energy-efficient behaviour without compromising their sense of control or productivity. This interpretation of the challenge has shaped the development of our display-based concept and the behavioural mechanisms behind it. 

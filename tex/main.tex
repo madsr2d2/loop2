@@ -48,11 +48,16 @@
 %\input{Sections/Examples.tex}
 %\cleardoublepage 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\part*{Appendices}
+\addcontentsline{toc}{part}{Appendices}
+\input{Backmatter/Appendix.tex}
+\clearpage
+\includepdf[pages=1, scale=0.8, pagecommand={\thispagestyle{plain}\section{Egholm Case Brief}}]{Backmatter/Egholm_case_brife.pdf}
+\input{Backmatter/VisitNotes.tex}
 \clearpage
 \printbibliography[heading=bibintoc,title={Bibliography}]
 %\cleardoublepage 
-%\appendix
-%\input{Backmatter/Appendix.tex}
 %\cleartoleftpage
 %\input{Backmatter/Backpage.tex}
 

@@ -1,1 +1,52 @@
-\section{Prototype}
+\section{Prototype Implementation}
+
+To validate the feasibility and user experience of the Energy-Aware Assistance System (EAAS), we developed a fully functional web-based prototype (\verb|`eaas_ui_prototype.html`|) that simulates the tractor's operating environment. This high-fidelity prototype demonstrates how the system processes sensor data, detects tasks, and provides real-time feedback to the operator.
+
+\subsection{User Interface Architecture}
+The user interface is designed for high readability in outdoor conditions, utilizing a dark, high-contrast color palette to reduce glare and eye strain. The layout is divided into three logical zones:
+
+\begin{description}
+	\item[Primary Status Dashboard:] The most prominent area, containing the "Traffic Light" indicator, current task display, and battery status. This ensures that critical efficiency data is always in the operator's peripheral vision.
+	\item[Actionable Insight Card:] A dynamic space that appears only when an improvement is possible. It displays specific suggestions (e.g., "Reduce suction power") and a one-tap "Apply Now" button to implement the change instantly.
+	\item[Telemetry \& Sensor Grid:] A secondary layer offering detailed metrics (speed, torque, power draw) and environmental data (humidity, surface conditions) for operators who desire deeper insights.
+\end{description}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Pictures/prototype.png}
+	\caption{Conceptual UI Prototype of the Egholm Eco-Assistent Power Guidance System. The display shows current task, outside conditions, operator power setting, and an efficiency indicator with dynamic suggestions for energy saving.}
+	\label{fig:prototype}
+\end{figure}
+
+\subsection{Core Logic: Task Auto-Detection}
+A central feature of the prototype is its ability to infer the operator's intent without manual input. The \texttt{detectTask()} algorithm fuses data from three simulated sources:
+\begin{itemize}
+	\item \textbf{Load Level (1-5):} Measures resistance on the motor/hydraulics.
+	\item \textbf{Power Level (1-5):} The operator's current setting.
+	\item \textbf{Attachment Status:} Whether the PTO (Power Take-Off) is engaged.
+\end{itemize}
+
+For example, high load combined with high power draw indicates \textbf{Mowing} (sustained cutting resistance). Conversely, medium load with variable power suggests \textbf{Vacuuming}. If no attachment is active, the system defaults to \textbf{Transport} mode. This distinction is crucial because, as noted in our rationale, a power level that is efficient for mowing may be wasteful for transport.
+
+\subsection{Feedback Algorithm: The Traffic Light}
+The "Traffic Light" indicator is driven by a context-aware calculation that compares the current power setting against a pre-defined "Optimal Range" for the detected task and environmental conditions.
+
+\begin{itemize}
+	\item \textbf{Green (Optimal):} Power is within the specific range (e.g., Level 4-5 for wet mowing).
+	\item \textbf{Yellow (Caution):} Power deviates by one level from the optimal range, or efficiency scores are moderate.
+	\item \textbf{Red (Inefficient):} Significant deviation (e.g., running Level 5 for dry sweeping) or low battery status (<30\%).
+\end{itemize}
+
+To prevent distraction, the system implements a \textbf{3-second hysteresis} (delay) on status changes. This ensures the indicator remains stable and does not flicker during momentary load spikes, building operator trust in the signal.
+
+\subsection{Behavioral Features}
+The prototype implements specific features to drive behavioral change:
+
+\subsubsection*{Actionable Suggestions}
+When the system detects inefficiency (Yellow/Red state), it generates a "Suggestion Card." Crucially, this card quantifies the benefit (e.g., "Energy: Will add ~12 min runtime") and offers a single "Apply Now" button. This reduces the friction of making an adjustment—the operator does not need to guess the correct setting, only to approve the system's recommendation.
+
+\subsubsection*{Positive Reinforcement}
+Drawing on behavioral psychology, the UI emphasizes rewards over penalties. A "Green Zone Streak" counter tracks how long the operator has maintained optimal efficiency, and an "Energy Saved" metric accumulates throughout the shift. This gamification element encourages operators to maintain their streak, turning energy saving into a personal achievement.
+
+\subsection{Simulation \& Validation}
+The prototype includes a dynamic simulation loop that runs every 3 seconds to mimic real-world variability. It simulates battery drain (which accelerates in Red status), fluctuating efficiency scores, and changing weather conditions (Wet/Dry). This allowed us to verify that the auto-detection logic correctly adapts recommendations—for instance, advising higher power for mowing when "rain" is simulated, but lower power for vacuuming under the same conditions.

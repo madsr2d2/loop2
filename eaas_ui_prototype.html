@@ -1,0 +1,1911 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EAAS – Energy Aware Assistance System (Improved Prototype)</title>
+  
+  <!--
+  ═══════════════════════════════════════════════════════════════════════════
+  ENERGY AWARE ASSISTANCE SYSTEM (EAAS) - PROTOTYPE UI
+  ═══════════════════════════════════════════════════════════════════════════
+  
+  PURPOSE:
+  This prototype demonstrates a behavioral design solution for Egholm A/S electric 
+  tractors. The system bridges the gap between technical capability and human usage 
+  patterns to extend battery runtime without expensive hardware upgrades.
+  
+  CORE DESIGN PRINCIPLES:
+  
+  1. TASK-AWARE INTELLIGENCE
+     - Auto-detects current operation (mowing, vacuuming, sweeping, transport)
+     - Provides context-specific power recommendations
+     - Recognizes that optimal power varies by task AND conditions
+     
+  2. NON-INTRUSIVE FEEDBACK
+     - Traffic light metaphor for at-a-glance comprehension
+     - No popup windows that interrupt operator workflow
+     - Dismissible elements respect operator autonomy
+     
+  3. POSITIVE REINFORCEMENT
+     - Celebrates efficient operation with streak counters
+     - Shows energy saved rather than energy wasted
+     - Uses encouraging language, never punitive
+     
+  4. ACTIONABLE GUIDANCE
+     - One-tap "Apply Now" for suggestions
+     - Clear before/after power level comparison
+     - Immediate impact preview (runtime benefit)
+     
+  5. OPERATOR RESPECT
+     - Full manual control always available
+     - System acts as helpful co-pilot, not enforcer
+     - Audio alerts can be toggled on/off
+     
+  KEY INSIGHT:
+  Different tasks require different power levels in the same conditions!
+  - Mowing wet grass: NEEDS MORE power (heavy, clumped grass)
+  - Vacuuming wet leaves: NEEDS LESS power (already grounded, heavy)
+  - Transport on wet surface: MAINTAIN power, REDUCE SPEED
+  
+  This contextual intelligence prevents the system from giving counterproductive
+  suggestions that would frustrate operators and damage trust.
+  
+  ═══════════════════════════════════════════════════════════════════════════
+  -->
+  
+  <style>
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    VISUAL DESIGN SYSTEM
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    DESIGN GOALS:
+    1. High readability in outdoor lighting (bright sun, shadows)
+    2. Glanceable information hierarchy (primary → secondary)
+    3. Professional appearance (not toy-like or game-like)
+    4. Reduced eye strain during 8-hour shifts
+    5. Accessible to color-blind operators (not color-only coding)
+    
+    COLOR PALETTE RATIONALE:
+    
+    Background: Dark blue-green gradient
+    - Reduces screen glare in bright outdoor conditions
+    - Less eye strain than white backgrounds
+    - Professional appearance suitable for municipal equipment
+    
+    Accent Green (#32d27b):
+    - Associates with "go," "optimal," "eco-friendly"
+    - High contrast against dark background
+    - Distinct from warning colors
+    
+    Warning Orange (#f97316):
+    - Universally recognized caution color
+    - Visible to color-blind operators
+    - Not as alarming as red, appropriate for "yellow zone"
+    
+    Danger Red (#ef4444):
+    - Clear critical status indicator
+    - Used sparingly to maintain impact
+    - Combined with symbols (not color alone)
+    
+    TYPOGRAPHY:
+    - Inter font: Excellent readability, professional
+    - Generous spacing: Reduces reading fatigue
+    - Size hierarchy: Important info is larger
+    
+    LAYOUT STRATEGY:
+    - Left column: Operator control & status (most important)
+    - Right column: Telemetry & analytics (secondary)
+    - Top-down information flow (most critical at top)
+    
+    INTERACTION DESIGN:
+    - Large touch targets (44px+) for gloved operation
+    - Hover states provide feedback
+    - Buttons have clear affordances (look clickable)
+    - No tiny close buttons or precise interactions
+    
+    ANIMATION PHILOSOPHY:
+    - Purposeful, not decorative
+    - Pulsing = "pay attention" (but gentle, not annoying)
+    - Transitions = smooth state changes (not jarring)
+    - Duration: Long enough to notice, short enough to not frustrate
+    */
+    
+    :root{
+      --bg:#0d1f14;
+      --card:#0b1a12;
+      --muted:#9fb9a8;
+      --accent:#32d27b;
+      --warn:#f97316;
+      --danger:#ef4444;
+      --glass:rgba(255,255,255,0.05);
+      --green:#22c55e;
+      --yellow:#eab308;
+      --red:#ef4444;
+    }
+    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,#071024 0%, #07182b 100%);color:#e6eef6}
+    .app{max-width:1100px;margin:28px auto;padding:20px;}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#16a34a);display:flex;align-items:center;justify-content:center;font-weight:700;color:#072014}
+    .title h1{margin:0;font-size:18px}
+    .title p{margin:0;color:var(--muted);font-size:13px}
+
+    .grid{display:grid;grid-template-columns:360px 1fr;gap:18px}
+    .card{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 6px 20px rgba(2,6,23,0.6);}
+
+    /* Traffic Light Indicator - Primary Visual */
+    .traffic-light-container{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px;
+      border-radius:12px;
+      background:rgba(0,0,0,0.3);
+      margin-bottom:16px;
+      border:2px solid transparent;
+      transition:all 0.3s ease;
+    }
+    .traffic-light-container.green{border-color:var(--green);background:rgba(34,197,94,0.08);}
+    .traffic-light-container.yellow{border-color:var(--yellow);background:rgba(234,179,8,0.08);}
+    .traffic-light-container.red{border-color:var(--red);background:rgba(239,68,68,0.08);}
+
+    .traffic-light{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+    .traffic-light-indicator{
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:32px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.4);
+      transition:all 0.3s ease;
+    }
+    .traffic-light-indicator.green{background:var(--green);animation:pulse-green 2s infinite;}
+    .traffic-light-indicator.yellow{background:var(--yellow);animation:pulse-yellow 1.5s infinite;}
+    .traffic-light-indicator.red{background:var(--red);animation:pulse-red 1s infinite;}
+
+    @keyframes pulse-green{0%,100%{box-shadow:0 4px 12px rgba(34,197,94,0.4);}50%{box-shadow:0 4px 20px rgba(34,197,94,0.8);}}
+    @keyframes pulse-yellow{0%,100%{box-shadow:0 4px 12px rgba(234,179,8,0.4);}50%{box-shadow:0 4px 20px rgba(234,179,8,0.8);}}
+    @keyframes pulse-red{0%,100%{box-shadow:0 4px 12px rgba(239,68,68,0.4);}50%{box-shadow:0 4px 20px rgba(239,68,68,0.8);}}
+
+    .traffic-light-text h2{margin:0;font-size:24px;font-weight:700;}
+    .traffic-light-text p{margin:4px 0 0 0;color:var(--muted);font-size:14px;}
+
+    .efficiency-badge{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:12px 16px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.05);
+    }
+    .efficiency-badge .label{font-size:12px;color:var(--muted);margin-bottom:4px;}
+    .efficiency-badge .score{font-size:28px;font-weight:700;}
+
+    /* Battery Section */
+    .battery{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+    .battery .level-container{flex:1;}
+    .battery .level{width:100%;height:24px;background:var(--glass);border-radius:12px;position:relative;overflow:hidden;border:2px solid rgba(255,255,255,0.1);}
+    .battery .level > i{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,var(--accent),#7be19a);transition:width 0.5s ease;}
+    .battery .text{font-weight:700;font-size:20px;min-width:60px;text-align:right;}
+    .battery .runtime{font-size:14px;color:var(--muted);margin-top:4px;}
+
+    /* Positive Reinforcement */
+    .achievement{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px;
+      border-radius:8px;
+      background:linear-gradient(90deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05));
+      margin-bottom:16px;
+      border-left:4px solid var(--green);
+    }
+    .achievement .icon{font-size:24px;}
+    .achievement .text{flex:1;}
+    .achievement .text .title{font-weight:600;color:var(--accent);font-size:15px;}
+    .achievement .text .subtitle{font-size:13px;color:var(--muted);margin-top:2px;}
+    .achievement.warning{
+      background:linear-gradient(90deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05));
+      border-left-color:var(--red);
+    }
+    .achievement.warning .title{color:var(--danger);}
+
+    /* Actionable Suggestions */
+    .suggestion-card{
+      padding:14px;
+      border-radius:10px;
+      background:rgba(255,255,255,0.03);
+      margin-bottom:12px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+    .suggestion-header{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .suggestion-header .icon{font-size:20px;}
+    .suggestion-header .text{
+      flex:1;
+      font-weight:600;
+      font-size:15px;
+    }
+    .suggestion-action{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-top:12px;
+    }
+    .power-compare{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex:1;
+      font-size:14px;
+    }
+    .power-compare .current{color:var(--warn);font-weight:600;}
+    .power-compare .arrow{color:var(--muted);}
+    .power-compare .suggested{color:var(--green);font-weight:700;}
+    .suggestion-action .btn{
+      padding:10px 20px;
+      border-radius:8px;
+      border:0;
+      background:var(--green);
+      color:#072014;
+      font-weight:700;
+      cursor:pointer;
+      font-size:14px;
+      transition:all 0.2s;
+      white-space:nowrap;
+    }
+    .suggestion-action .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(34,197,94,0.4);}
+    .suggestion-action .btn:active{transform:translateY(0);}
+    .impact{font-size:13px;color:var(--accent);margin-top:8px;font-weight:600;}
+
+    /* Sensors - Compact Grid */
+    .sensors{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+    .sensor{padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);font-size:13px;}
+    .sensor .label{font-size:11px;color:var(--muted);margin-bottom:4px;}
+    .sensor .value{font-weight:600;}
+
+    /* Context-Aware Sections */
+    .context-low-battery .traffic-light-container{border-width:3px;}
+    .context-low-battery .suggestion-card{border-color:var(--danger);background:rgba(239,68,68,0.05);}
+
+    /* Map and Telemetry */
+    .map-placeholder{height:160px;border-radius:8px;background:linear-gradient(180deg,#07182b,#021018);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;}
+    .telemetry{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+    .telemetry .tile{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);text-align:center;}
+    .telemetry .tile .label{color:var(--muted);font-size:12px;margin-bottom:4px;}
+    .telemetry .tile .value{font-weight:700;font-size:16px;}
+
+    /* Summary Cards */
+    .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+    .summary-tile{padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);text-align:center;}
+    .summary-tile .label{font-size:12px;color:var(--muted);margin-bottom:4px;}
+    .summary-tile .value{font-weight:700;font-size:18px;}
+
+    /* Controls */
+    .controls{display:flex;gap:10px;align-items:center;margin-top:14px;}
+    .btn{padding:8px 12px;border-radius:8px;border:0;background:#0b1724;color:#cfeaf0;font-weight:600;cursor:pointer;font-size:13px;transition:all 0.2s;}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);}
+    .btn:hover{background:#0f1f2e;}
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;}
+
+    /* Dismissible achievement */
+    .achievement .close-btn{
+      background:none;
+      border:none;
+      color:var(--muted);
+      font-size:18px;
+      cursor:pointer;
+      padding:0;
+      width:24px;
+      height:24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:4px;
+      transition:all 0.2s;
+    }
+    .achievement .close-btn:hover{background:rgba(255,255,255,0.1);color:#fff;}
+    .achievement.hidden{display:none;}
+
+    /* Traffic light history */
+    .traffic-history{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:4px;
+      font-weight:normal;
+    }
+
+    /* Pulse animation for suggestion button */
+    @keyframes button-pulse{
+      0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}
+      70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}
+      100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
+    }
+    .suggestion-action .btn.pulse{
+      animation:button-pulse 2s infinite;
+    }
+
+    /* Settings toggle */
+    .settings-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:8px 0;
+      font-size:13px;
+    }
+    .toggle{
+      position:relative;
+      width:44px;
+      height:24px;
+      background:rgba(255,255,255,0.1);
+      border-radius:12px;
+      cursor:pointer;
+      transition:all 0.3s;
+    }
+    .toggle.on{background:var(--green);}
+    .toggle .slider{
+      position:absolute;
+      top:2px;
+      left:2px;
+      width:20px;
+      height:20px;
+      background:white;
+      border-radius:50%;
+      transition:all 0.3s;
+    }
+    .toggle.on .slider{left:22px;}
+
+    /* Inline panel for tips/logs */
+    .inline-panel{
+      background:rgba(255,255,255,0.03);
+      border-radius:8px;
+      padding:14px;
+      margin-top:12px;
+      border:1px solid rgba(255,255,255,0.08);
+      display:none;
+    }
+    .inline-panel.show{display:block;}
+    .inline-panel h3{margin:0 0 10px 0;font-size:15px;font-weight:600;}
+    .inline-panel ul{margin:8px 0;padding-left:20px;line-height:1.7;}
+    .inline-panel li{font-size:13px;color:var(--muted);}
+    .inline-panel .close-panel{
+      float:right;
+      background:none;
+      border:none;
+      color:var(--muted);
+      cursor:pointer;
+      font-size:18px;
+      padding:0;
+    }
+    .inline-panel .close-panel:hover{color:#fff;}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .grid{grid-template-columns:1fr;}
+      .app{padding:12px;}
+      .traffic-light-indicator{width:52px;height:52px;font-size:26px;}
+      .traffic-light-text h2{font-size:20px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="appContainer">
+    <header>
+      <div class="brand">
+        <div class="logo">EA</div>
+        <div class="title">
+          <h1>Energy Aware Assistance – Improved UI</h1>
+          <p>Operator dashboard · runtime simulation</p>
+        </div>
+      </div>
+      <div class="meta">
+        <div style="text-align:right">
+          <div style="font-weight:700">E-Tractor #42</div>
+          <div style="color:var(--muted);font-size:13px">Location: Lemvig – Shift: Morning</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card status">
+        <!-- Current Task Display -->
+        <div style="background:rgba(50,210,123,0.08);border-left:4px solid var(--accent);padding:12px;border-radius:8px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="font-size:28px;" id="taskIcon">🔪</div>
+            <div style="flex:1;">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">Active Task</div>
+              <div style="font-weight:700;font-size:16px;" id="taskName">Mowing</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="taskDetails">Front deck engaged</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRIMARY: Traffic Light Status -->
+        <div class="traffic-light-container" id="trafficContainer">
+          <div class="traffic-light">
+            <div class="traffic-light-indicator" id="trafficLight">
+              <span id="trafficIcon">✓</span>
+            </div>
+            <div class="traffic-light-text">
+              <h2 id="trafficStatus">OPTIMAL</h2>
+              <p id="trafficSubtext">Excellent efficiency</p>
+              <p class="traffic-history" id="trafficHistory">In green zone: 18 min</p>
+            </div>
+          </div>
+          <div class="efficiency-badge">
+            <div class="label">Score</div>
+            <div class="score" id="effScore">78</div>
+          </div>
+        </div>
+
+        <!-- Battery Status -->
+        <div class="battery">
+          <div class="level-container">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="color:var(--muted);font-size:13px">Battery</span>
+              <span class="text" id="batteryPercent">60%</span>
+            </div>
+            <div class="level"><i id="batteryFill"></i></div>
+            <div class="runtime">⏱ <span id="runtime">3h 12min</span> remaining</div>
+          </div>
+        </div>
+
+        <!-- Positive Reinforcement / Warning -->
+        <div class="achievement" id="achievement">
+          <div class="icon">🎯</div>
+          <div class="text">
+            <div class="title" id="achievementTitle">Energy saved today: 18 minutes</div>
+            <div class="subtitle" id="achievementSubtitle">Efficient operation streak: 24 min</div>
+          </div>
+          <button class="close-btn" id="closeAchievement" aria-label="Dismiss">×</button>
+        </div>
+
+        <!-- Actionable Suggestion -->
+        <div class="suggestion-card" id="suggestionCard">
+          <div class="suggestion-header">
+            <span class="icon">💡</span>
+            <span class="text" id="suggestionText">Reduce suction power for dry conditions</span>
+          </div>
+          <div class="suggestion-action">
+            <div class="power-compare">
+              <span class="current">Level 5</span>
+              <span class="arrow">→</span>
+              <span class="suggested">Level 3</span>
+            </div>
+            <button class="btn" id="applyBtn">Apply Now</button>
+          </div>
+          <div class="impact" id="impact">⚡ Will add ~12 min runtime</div>
+        </div>
+
+        <!-- Secondary: Sensor Data (Simplified) -->
+        <details>
+          <summary style="cursor:pointer;font-weight:600;margin-bottom:10px;color:var(--muted);font-size:13px">Critical Sensors</summary>
+          <div class="sensors">
+            <div class="sensor">
+              <div class="label">Surface</div>
+              <div class="value" id="surface">Wet – High Drag</div>
+            </div>
+            <div class="sensor">
+              <div class="label">Load</div>
+              <div class="value" id="load">High</div>
+            </div>
+          </div>
+          <details style="margin-top:8px;">
+            <summary style="cursor:pointer;font-size:12px;color:var(--muted);padding:4px 0">Show all sensors</summary>
+            <div class="sensors" style="margin-top:8px;">
+              <div class="sensor">
+                <div class="label">Humidity</div>
+                <div class="value" id="humidity">78%</div>
+              </div>
+              <div class="sensor">
+                <div class="label">Cabin Temp</div>
+                <div class="value">12 °C</div>
+              </div>
+            </div>
+          </details>
+        </details>
+
+        <!-- Settings -->
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer;font-weight:600;margin-bottom:10px;color:var(--muted);font-size:13px">Settings</summary>
+          <div class="settings-row">
+            <span>🔊 Audio alerts</span>
+            <div class="toggle on" id="audioToggle">
+              <div class="slider"></div>
+            </div>
+          </div>
+        </details>
+
+        <div style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.05)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:12px;color:var(--muted)">🔄 Last sync: <span id="syncTime">11:42</span></div>
+            <div class="controls">
+              <button class="btn ghost" id="logBtn">View Log</button>
+              <button class="btn ghost" id="tipsBtn">Tips</button>
+            </div>
+          </div>
+
+          <!-- Inline Tips Panel -->
+          <div class="inline-panel" id="tipsPanel">
+            <button class="close-panel" id="closeTips">×</button>
+            <h3>💡 Operator Tips</h3>
+            <ul>
+              <li>Smooth throttle control improves runtime significantly</li>
+              <li>Reduce power on dry or easy surfaces</li>
+              <li>Plan heavy tasks for optimal weather conditions</li>
+              <li>Watch the traffic light for real-time guidance</li>
+              <li>Small adjustments add up to meaningful energy savings</li>
+            </ul>
+          </div>
+
+          <!-- Inline Log Panel -->
+          <div class="inline-panel" id="logPanel">
+            <button class="close-panel" id="closeLog">×</button>
+            <h3>📊 Operation Log</h3>
+            <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+              <strong style="color:#e6eef6">Today's Summary:</strong><br>
+              • Total runtime: 2h 34min<br>
+              • Energy saved: 18 minutes<br>
+              • Average efficiency: 82<br>
+              • Optimal operation: 78% of time<br>
+              • Green zone duration: 2h 1min
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div>
+              <div style="font-size:13px;color:var(--muted)">Realtime Telemetry</div>
+              <div style="font-weight:700">Drive & Energy Overview</div>
+            </div>
+          </div>
+
+          <div class="map-placeholder" role="img" aria-label="operation map">📍 Map / route preview (prototype)</div>
+
+          <div class="telemetry">
+            <div class="tile">
+              <div class="label">Speed</div>
+              <div class="value" id="speed">12 km/h</div>
+            </div>
+            <div class="tile">
+              <div class="label">Torque</div>
+              <div class="value">420 Nm</div>
+            </div>
+            <div class="tile">
+              <div class="label">Power Draw</div>
+              <div class="value" id="powerDraw">5.6 kW</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <div>
+              <div style="font-weight:700">Weekly Summary</div>
+              <div style="color:var(--muted);font-size:13px">Your performance vs. baseline</div>
+            </div>
+            <div style="text-align:right;color:var(--muted);font-size:12px">Updated: Today</div>
+          </div>
+
+          <div class="summary-grid">
+            <div class="summary-tile">
+              <div class="label">Avg Score</div>
+              <div class="value">82</div>
+            </div>
+            <div class="summary-tile">
+              <div class="label">Energy Saved</div>
+              <div class="value">12%</div>
+            </div>
+            <div class="summary-tile">
+              <div class="label">Operator Rank</div>
+              <div class="value">3 / 12</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer style="display:none;">
+    </footer>
+  </div>
+
+  <script>
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    TASK-SPECIFIC POWER PROFILES
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    WHY TASK-SPECIFIC PROFILES ARE CRITICAL:
+    
+    Early prototypes made the mistake of treating "wet conditions" as a single
+    scenario requiring "less power." This is WRONG and would frustrate operators!
+    
+    The physics of each task are fundamentally different:
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ MOWING WET GRASS                                                    │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ • Grass is heavier when wet (water content)                         │
+    │ • Grass clumps together, creating more cutting resistance           │
+    │ • Blades can clog more easily if power is too low                   │
+    │ • RESULT: Need MORE power in wet vs dry conditions                  │
+    │ • Optimal: Level 4-5 (vs Level 3-4 for dry)                        │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ VACUUMING WET LEAVES                                                │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ • Wet debris is heavier, less likely to be airborne                 │
+    │ • Doesn't fly around, so less suction needed to capture it          │
+    │ • Over-suction wastes energy on already-grounded material           │
+    │ • RESULT: Need LESS power in wet vs dry conditions                  │
+    │ • Optimal: Level 2-3 (vs Level 4-5 for dry)                        │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ TRANSPORT ON WET SURFACE                                            │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ • Main risk is wheel slip, not power efficiency                     │
+    │ • Need to MAINTAIN torque to prevent loss of traction               │
+    │ • Should reduce SPEED, not POWER                                    │
+    │ • RESULT: Same power range, different operating advice              │
+    │ • Optimal: Level 2-3 (same for wet and dry)                        │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    This is why auto-detection is essential - the system must know WHAT the
+    operator is doing before it can give intelligent recommendations.
+    
+    PROFILE STRUCTURE:
+    Each task profile contains:
+    - icon, name, details: For display in UI
+    - dryOptimal: [min, max] power range for dry conditions
+    - wetOptimal: [min, max] power range for wet conditions  
+    - suggestions: Context-aware text for different scenarios
+    */
+    
+    // Task-specific power profiles
+    const taskProfiles = {
+      mowing: {
+        icon: '🔪',
+        name: 'Mowing',
+        details: 'Front deck engaged',
+        dryOptimal: [3, 4],
+        wetOptimal: [4, 5],
+        suggestions: {
+          dry: {
+            optimal: 'Dry grass - Level 3-4 optimal for clean cutting',
+            tooLow: 'Increase power - risk of uneven cut and clogging',
+            tooHigh: 'Reduce to Level 4 - unnecessary motor strain'
+          },
+          wet: {
+            optimal: 'Wet grass - Level 4-5 needed for effective cutting',
+            tooLow: 'Increase power - wet grass requires more cutting force',
+            tooHigh: 'Level 5 is maximum recommended for wet conditions'
+          }
+        }
+      },
+      
+      vacuuming: {
+        icon: '🌀',
+        name: 'Vacuuming',
+        details: 'Suction unit active',
+        dryOptimal: [4, 5],
+        wetOptimal: [2, 3],
+        suggestions: {
+          dry: {
+            optimal: 'Dry debris - Level 4-5 for effective collection',
+            tooLow: 'Increase suction - light debris needs higher power',
+            tooHigh: 'Level 5 is appropriate for dry conditions'
+          },
+          wet: {
+            optimal: 'Wet debris - Level 2-3 optimal (heavy, less airborne)',
+            tooLow: 'Minimum Level 2 needed for collection',
+            tooHigh: 'Reduce suction - wet debris is heavy, over-suction wastes energy'
+          }
+        }
+      },
+      
+      sweeping: {
+        icon: '🧹',
+        name: 'Sweeping',
+        details: 'Brush engaged',
+        dryOptimal: [3, 4],
+        wetOptimal: [3, 4],
+        suggestions: {
+          dry: {
+            optimal: 'Dry surface - Level 3-4 for efficient sweeping',
+            tooLow: 'Increase brush speed for better debris pickup',
+            tooHigh: 'Reduce to Level 4 - excess power creates dust'
+          },
+          wet: {
+            optimal: 'Wet surface - Level 3-4 maintains traction and pickup',
+            tooLow: 'Increase slightly - wet debris needs consistent force',
+            tooHigh: 'Level 4 is sufficient - higher power risks wheel slip'
+          }
+        }
+      },
+      
+      transport: {
+        icon: '🚜',
+        name: 'Transport',
+        details: 'No attachment active',
+        dryOptimal: [2, 3],
+        wetOptimal: [2, 3],
+        suggestions: {
+          dry: {
+            optimal: 'Transport mode - Level 2-3 for efficient travel',
+            tooLow: 'Level 2 minimum for smooth operation',
+            tooHigh: 'Reduce to Level 3 - no attachment load detected'
+          },
+          wet: {
+            optimal: 'Wet surface - Level 2-3, reduce SPEED to prevent slip',
+            tooLow: 'Maintain Level 2 minimum for traction control',
+            tooHigh: 'Reduce power - focus on speed control, not power'
+          }
+        }
+      }
+    };
+
+    // State management
+    let state = {
+      battery: 60,
+      humidity: 78,
+      wetSurface: true,
+      efficiency: 78,
+      powerLevel: 5,
+      suggestedPowerLevel: 3,
+      streak: 24,
+      energySaved: 18,
+      status: 'yellow', // green, yellow, red
+      lastStatusChange: Date.now(),
+      hysteresis: 3000, // 3 second delay before status change
+      audioEnabled: true,
+      achievementDismissed: false,
+      greenZoneTime: 18, // minutes in green zone
+      currentZoneStart: Date.now(),
+      currentTask: 'mowing', // Auto-detected task
+      loadLevel: 4, // 1-5 scale from sensors
+      attachmentActive: true
+    };
+
+    // DOM elements
+    const elements = {
+      taskIcon: document.getElementById('taskIcon'),
+      taskName: document.getElementById('taskName'),
+      taskDetails: document.getElementById('taskDetails'),
+      trafficContainer: document.getElementById('trafficContainer'),
+      trafficLight: document.getElementById('trafficLight'),
+      trafficIcon: document.getElementById('trafficIcon'),
+      trafficStatus: document.getElementById('trafficStatus'),
+      trafficSubtext: document.getElementById('trafficSubtext'),
+      trafficHistory: document.getElementById('trafficHistory'),
+      effScore: document.getElementById('effScore'),
+      batteryFill: document.getElementById('batteryFill'),
+      batteryPercent: document.getElementById('batteryPercent'),
+      runtime: document.getElementById('runtime'),
+      achievement: document.getElementById('achievement'),
+      achievementTitle: document.getElementById('achievementTitle'),
+      achievementSubtitle: document.getElementById('achievementSubtitle'),
+      closeAchievement: document.getElementById('closeAchievement'),
+      suggestionCard: document.getElementById('suggestionCard'),
+      suggestionText: document.getElementById('suggestionText'),
+      impact: document.getElementById('impact'),
+      applyBtn: document.getElementById('applyBtn'),
+      surface: document.getElementById('surface'),
+      humidity: document.getElementById('humidity'),
+      load: document.getElementById('load'),
+      speed: document.getElementById('speed'),
+      powerDraw: document.getElementById('powerDraw'),
+      syncTime: document.getElementById('syncTime'),
+      audioToggle: document.getElementById('audioToggle'),
+      tipsBtn: document.getElementById('tipsBtn'),
+      logBtn: document.getElementById('logBtn'),
+      tipsPanel: document.getElementById('tipsPanel'),
+      logPanel: document.getElementById('logPanel'),
+      closeTips: document.getElementById('closeTips'),
+      closeLog: document.getElementById('closeLog'),
+      appContainer: document.getElementById('appContainer')
+    };
+
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    TASK AUTO-DETECTION ALGORITHM
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    PURPOSE:
+    Automatically identify which task the operator is currently performing based
+    on real-time sensor data. This allows the system to provide contextually
+    appropriate recommendations without requiring manual task selection.
+    
+    SENSOR INPUTS USED:
+    
+    1. LOAD LEVEL (1-5 scale)
+       - Measures torque/resistance from motor controllers
+       - High load = heavy cutting resistance or suction resistance
+       - Low load = transport or light work
+       
+    2. POWER LEVEL (1-5 scale)
+       - Current power setting chosen by operator
+       - Combined with load, indicates task type
+       
+    3. ATTACHMENT ACTIVE (boolean)
+       - PTO (Power Take-Off) sensor indicates if hydraulic attachment is engaged
+       - False = transport mode (no attachment working)
+       
+    DETECTION LOGIC:
+    
+    Priority 1: Check if any attachment is active
+    → If not, task = TRANSPORT (regardless of other sensors)
+    
+    Priority 2: Analyze load + power combination
+    → High load (≥4) + High power (≥4) = MOWING
+       Reason: Cutting grass creates high, sustained resistance
+       
+    → Medium-high load (≥3) + Variable power = Could be MOWING or VACUUMING
+       Additional check: Wet surface + lower power suggests VACUUMING
+       (Operators reduce vacuum power for wet debris)
+       
+    → Medium load (≥2) = SWEEPING
+       Reason: Brush creates moderate, consistent resistance
+       
+    REAL-WORLD CALIBRATION:
+    In production, these thresholds would be calibrated using:
+    - Egholm's internal test data from controlled conditions
+    - Telematics data from fleet operations
+    - Machine learning on labeled task sequences
+    
+    For this prototype, we use simplified heuristics that demonstrate the concept.
+    */
+    
+    // Auto-detect task based on sensor readings
+    function detectTask() {
+      const { loadLevel, powerLevel, attachmentActive } = state;
+      
+      // PRIORITY 1: Check attachment status first
+      // If PTO is off, operator is definitely just transporting
+      if (!attachmentActive || loadLevel < 2) {
+        return 'transport';
+      }
+      
+      // PRIORITY 2: High load + high power = likely mowing
+      // Cutting grass creates sustained high resistance
+      // Both load sensor (torque) and power draw are elevated
+      if (loadLevel >= 4 && powerLevel >= 4) {
+        return 'mowing';
+      }
+      
+      // PRIORITY 3: Medium-high load = could be mowing OR vacuuming
+      // Need to look at contextual clues to differentiate
+      if (loadLevel >= 3 && powerLevel >= 3) {
+        // If surface is wet AND power is relatively low (≤3),
+        // operator has likely reduced power for wet debris vacuuming
+        // (Wet leaves don't need high suction)
+        if (state.wetSurface && powerLevel <= 3) {
+          return 'vacuuming';
+        }
+        // Otherwise, randomly assign (in production, would use more sensors)
+        // Could look at: hydraulic pressure patterns, RPM variations, etc.
+        return Math.random() > 0.5 ? 'mowing' : 'vacuuming';
+      }
+      
+      // PRIORITY 4: Medium load = sweeping
+      // Brush creates moderate, consistent resistance
+      // Not as heavy as mowing, not as variable as vacuuming
+      if (loadLevel >= 2) {
+        return 'sweeping';
+      }
+      
+      // DEFAULT: If nothing else matches, assume transport
+      return 'transport';
+    }
+
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    TRAFFIC LIGHT STATUS CALCULATION
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    PURPOSE:
+    Determine if the current operation is efficient (GREEN), could be better 
+    (YELLOW), or wasteful (RED) based on task-specific optimal power ranges.
+    
+    WHY THIS MATTERS:
+    The traffic light is the PRIMARY visual feedback mechanism. Operators glance
+    at it frequently during work, so it must be:
+    - Accurate (based on real task requirements)
+    - Stable (not flickering between states)
+    - Trustworthy (operators must believe it reflects reality)
+    
+    CALCULATION APPROACH:
+    
+    1. GET TASK-SPECIFIC OPTIMAL RANGE
+       - Each task has different power needs (see taskProfiles above)
+       - Wet vs dry conditions also affect optimal range
+       - Example: Mowing wet grass needs Level 4-5, not Level 3-4
+       
+    2. CALCULATE DEVIATION FROM OPTIMAL
+       - How far is current power level from optimal range?
+       - Deviation = 0 means inside optimal range (perfect)
+       - Deviation = 1 means one level away (acceptable but improvable)
+       - Deviation ≥ 2 means significantly inefficient
+       
+    3. APPLY CONTEXT-AWARE THRESHOLDS
+       - Low battery (<30%): Stricter criteria, prioritize runtime extension
+       - Normal battery: Allow more tolerance, balance performance with efficiency
+       
+    STATUS MEANINGS:
+    
+    GREEN (Optimal):
+    - Power level is within optimal range for current task
+    - Efficiency score is good (>75% for low battery, >72% normal)
+    - Operator is using energy efficiently
+    - Positive reinforcement: "Excellent efficiency!"
+    
+    YELLOW (Caution):
+    - Power level is 1 step away from optimal, OR
+    - Efficiency score is moderate (65-75% for low battery, 60-72% normal)
+    - Gentle nudge: "Could be more efficient"
+    - Suggestion provided to improve
+    
+    RED (Inefficient):
+    - Power level is 2+ steps from optimal, OR
+    - Efficiency score is poor (<65% for low battery, <60% normal)
+    - Strong signal: "High energy waste"
+    - Clear action needed to extend runtime
+    
+    HYSTERESIS:
+    Note: Status changes are delayed by 3 seconds (see updateTrafficLight)
+    to prevent flickering and distraction. The traffic light should feel calm
+    and considered, not jumpy and anxious.
+    */
+    
+    // Determine efficiency status based on conditions AND task
+    function calculateStatus() {
+      const { efficiency, battery, wetSurface, powerLevel, currentTask } = state;
+      const profile = taskProfiles[currentTask];
+      
+      // Get optimal power range for current task and conditions
+      // Example: Mowing wet grass = [4, 5], Vacuuming wet debris = [2, 3]
+      const optimalRange = wetSurface ? profile.wetOptimal : profile.dryOptimal;
+      
+      // Check if current power is within optimal range
+      const inOptimalRange = powerLevel >= optimalRange[0] && powerLevel <= optimalRange[1];
+      
+      // Calculate deviation (how far from optimal?)
+      // We want the MINIMUM distance to either end of the range
+      // Example: If optimal is [3, 4] and power is 2, deviation = 1
+      // Example: If optimal is [3, 4] and power is 6, deviation = 2
+      const deviation = Math.min(
+        Math.abs(powerLevel - optimalRange[0]),  // Distance to lower bound
+        Math.abs(powerLevel - optimalRange[1])   // Distance to upper bound
+      );
+      
+      // CONTEXT 1: Low battery (<30%) requires stricter efficiency
+      if (battery < 30) {
+        // When battery is critical, we can't tolerate waste
+        if (!inOptimalRange || efficiency < 65) return 'red';    // Immediate action needed
+        if (deviation > 0 || efficiency < 75) return 'yellow';   // Should improve
+        return 'green';                                          // Optimal
+      } 
+      // CONTEXT 2: Normal battery allows more tolerance
+      else {
+        // When battery is healthy, small deviations are acceptable
+        if (deviation >= 2 || efficiency < 60) return 'red';     // Significantly wasteful
+        if (deviation > 0 || efficiency < 72) return 'yellow';   // Could be better
+        return 'green';                                          // Within acceptable range
+      }
+    }
+
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    TRAFFIC LIGHT UPDATE WITH HYSTERESIS
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    PURPOSE:
+    Update the visual traffic light indicator while preventing distracting
+    flicker through intelligent state change delays (hysteresis).
+    
+    THE HYSTERESIS PROBLEM:
+    
+    Without hysteresis, rapid sensor fluctuations could cause:
+    Green → Yellow → Green → Yellow (every few seconds)
+    
+    This is EXTREMELY distracting for operators who are:
+    - Driving the tractor
+    - Watching their work area
+    - Managing attachments
+    - Monitoring obstacles
+    
+    A flickering traffic light trains operators to IGNORE it, defeating the
+    entire purpose of the feedback system!
+    
+    THE SOLUTION: 3-SECOND DELAY
+    
+    The system only changes status if:
+    1. A new status is calculated (green/yellow/red)
+    2. It's DIFFERENT from current status
+    3. At least 3 seconds have passed since the last change
+    
+    This creates a "calm" interface that only updates when there's a
+    genuine, sustained change in operating conditions.
+    
+    STATUS CHANGE HANDLING:
+    
+    When status DOES change, the system:
+    
+    1. TRACKS GREEN ZONE TIME
+       - Records how long operator was in previous zone
+       - Accumulates total green zone minutes for the day
+       - Used for positive reinforcement and reporting
+       
+    2. OPTIONAL AUDIO FEEDBACK
+       - Gentle chime when entering green zone (if enabled)
+       - Subtle alert tone when entering red zone (if enabled)
+       - NEVER uses popup windows (interrupts workflow)
+       - Just logs to console in this prototype
+       
+    3. RE-SHOWS ACHIEVEMENT BANNER
+       - If operator dismissed the achievement banner
+       - But status becomes critical (red or low battery)
+       - Banner automatically reappears with warning
+       - Ensures critical information isn't hidden
+    
+    CONTEXT-AWARE VISUAL STYLING:
+    
+    Low Battery Mode (<30%):
+    - Adds 'context-low-battery' class to entire interface
+    - Makes efficiency indicators more prominent
+    - Adjusts suggestion card styling for urgency
+    - Signals to operator that conservation is critical
+    
+    TRAFFIC LIGHT DISPLAY:
+    
+    Each status has specific visual characteristics:
+    
+    GREEN:
+    - Icon: ✓ (checkmark)
+    - Text: "OPTIMAL"
+    - Subtext: "Excellent efficiency"
+    - Animation: Gentle pulse (2s cycle)
+    - History: "In green zone: X min today"
+    
+    YELLOW:
+    - Icon: ! (exclamation)
+    - Text: "CAUTION"
+    - Subtext: "Could be more efficient"
+    - Animation: Moderate pulse (1.5s cycle)
+    - History: "Total green time: X min"
+    
+    RED:
+    - Icon: ⚠ (warning triangle)
+    - Text: "INEFFICIENT"
+    - Subtext: "High energy waste"
+    - Animation: Faster pulse (1s cycle)
+    - History: "Total green time: X min"
+    
+    The pulsing animation makes the indicator noticeable in peripheral vision
+    without being distracting when in optimal (green) state.
+    */
+    
+    // Update traffic light with hysteresis
+    function updateTrafficLight() {
+      const newStatus = calculateStatus();
+      const now = Date.now();
+      
+      // Only change status if enough time has passed (hysteresis)
+      if (newStatus !== state.status && (now - state.lastStatusChange) > state.hysteresis) {
+        const oldStatus = state.status;
+        
+        // Track time in previous zone
+        const timeInZone = Math.floor((now - state.currentZoneStart) / 60000); // minutes
+        if (oldStatus === 'green') {
+          state.greenZoneTime += timeInZone;
+        }
+        
+        state.status = newStatus;
+        state.lastStatusChange = now;
+        state.currentZoneStart = now;
+        
+        // Optional audio feedback (just console log, no popup)
+        if (state.audioEnabled) {
+          if (newStatus === 'green' && oldStatus !== 'green') {
+            console.log('🎵 Audio: Entering optimal zone');
+            // In real implementation, this would trigger a gentle chime
+          } else if (newStatus === 'red' && oldStatus !== 'red') {
+            console.log('⚠️ Audio: High energy usage detected');
+            // In real implementation, this would trigger a subtle alert tone
+          }
+        }
+        
+        // Re-show achievement banner on status change if it was dismissed
+        if (state.achievementDismissed && (newStatus === 'red' || state.battery < 30)) {
+          state.achievementDismissed = false;
+          elements.achievement.classList.remove('hidden');
+        }
+      }
+
+      // Update visual elements
+      elements.trafficContainer.className = `traffic-light-container ${state.status}`;
+      elements.trafficLight.className = `traffic-light-indicator ${state.status}`;
+      
+      // Context-aware UI adjustments
+      if (state.battery < 30) {
+        elements.appContainer.classList.add('context-low-battery');
+      } else {
+        elements.appContainer.classList.remove('context-low-battery');
+      }
+
+      // Update status text and history
+      switch(state.status) {
+        case 'green':
+          elements.trafficIcon.textContent = '✓';
+          elements.trafficStatus.textContent = 'OPTIMAL';
+          elements.trafficSubtext.textContent = 'Excellent efficiency';
+          const greenTime = state.greenZoneTime + Math.floor((Date.now() - state.currentZoneStart) / 60000);
+          elements.trafficHistory.textContent = `In green zone: ${greenTime} min today`;
+          break;
+        case 'yellow':
+          elements.trafficIcon.textContent = '!';
+          elements.trafficStatus.textContent = 'CAUTION';
+          elements.trafficSubtext.textContent = 'Could be more efficient';
+          elements.trafficHistory.textContent = `Total green time: ${state.greenZoneTime} min`;
+          break;
+        case 'red':
+          elements.trafficIcon.textContent = '⚠';
+          elements.trafficStatus.textContent = 'INEFFICIENT';
+          elements.trafficSubtext.textContent = 'High energy waste';
+          elements.trafficHistory.textContent = `Total green time: ${state.greenZoneTime} min`;
+          break;
+      }
+    }
+
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    POSITIVE REINFORCEMENT & WARNING SYSTEM
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    PURPOSE:
+    Provide emotional/psychological feedback that motivates efficient behavior
+    without creating stress, anxiety, or resentment.
+    
+    BEHAVIORAL PSYCHOLOGY PRINCIPLES:
+    
+    1. POSITIVE REINFORCEMENT > NEGATIVE PUNISHMENT
+       Research shows people respond better to rewards than penalties.
+       
+       Bad approach: "You wasted 20 minutes of battery"
+       Good approach: "You saved 18 minutes today!"
+       
+       Both convey efficiency information, but one feels like failure
+       while the other feels like achievement.
+    
+    2. CONCRETE PROGRESS TRACKING
+       Abstract scores (78/100) are less motivating than tangible metrics.
+       
+       "Efficiency: 82" → Meaningless to most operators
+       "Energy saved: 18 minutes" → I can finish my route!
+       "Streak: 24 min" → I'm on a roll, keep it up!
+    
+    3. DISMISSIBLE BUT PERSISTENT
+       Operators must feel in control, not nagged.
+       
+       - Banner can be dismissed with × button
+       - But reappears if situation becomes critical (red/low battery)
+       - Respects operator autonomy while ensuring safety
+    
+    DISPLAY LOGIC:
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ CRITICAL SITUATIONS (Red status OR Low battery)                     │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Display: ⚠️ Warning banner                                          │
+    │ Message: "Battery low: X% remaining"                                │
+    │ Subtext: "Reduce power usage to extend runtime"                     │
+    │ Tone: Urgent but not panicked                                       │
+    │                                                                      │
+    │ Rationale: Operator needs immediate awareness of critical state.    │
+    │ Even if they dismissed the banner before, low battery overrides.    │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ OPTIMAL PERFORMANCE (Green status)                                  │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Display: 🎯 Achievement banner                                      │
+    │ Message: "Energy saved today: X minutes"                            │
+    │ Subtext: "Efficient operation streak: X min"                        │
+    │ Tone: Celebratory, encouraging                                      │
+    │                                                                      │
+    │ Rationale: Positive reinforcement strengthens good habits.          │
+    │ Streak counter creates mild gamification.                           │
+    │                                                                      │
+    │ Streak increments slowly to feel achievable:                        │
+    │ - Only when in green zone                                           │
+    │ - 30% chance per update cycle (not guaranteed)                      │
+    │ - Makes each increment feel earned                                  │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ ROOM FOR IMPROVEMENT (Yellow status)                                │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Display: 💡 Suggestion banner                                       │
+    │ Message: "Energy saved today: X minutes"                            │
+    │ Subtext: "Small adjustments can improve efficiency"                 │
+    │ Tone: Neutral, informative                                          │
+    │                                                                      │
+    │ Rationale: Still shows positive progress (energy saved so far)      │
+    │ but hints that more is possible. Not judgmental.                    │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    DISMISSAL BEHAVIOR:
+    
+    When operator clicks × button:
+    - state.achievementDismissed = true
+    - Banner hides immediately
+    - System respects operator's choice
+    
+    BUT if status becomes critical:
+    - state.achievementDismissed = false (override)
+    - Banner reappears with warning
+    - Safety takes precedence over preference
+    
+    This balance is crucial:
+    - Operators feel respected (can dismiss)
+    - Safety is maintained (reappears when needed)
+    - System doesn't feel like it's nagging
+    
+    LANGUAGE DESIGN:
+    
+    Every word is chosen carefully:
+    
+    ❌ "You're wasting energy" → Accusatory
+    ✅ "Small adjustments can improve" → Helpful
+    
+    ❌ "Battery critical!" → Panic-inducing
+    ✅ "Battery low - reduce power to extend runtime" → Solution-oriented
+    
+    ❌ "Efficiency: 62/100" → Feels like test failure
+    ✅ "Energy saved: 18 minutes" → Feels like progress
+    
+    The goal is to create a system that feels like a helpful colleague,
+    not a judgmental supervisor or anxious alarm system.
+    */
+    
+    // Update achievement/warning section
+    function updateAchievement() {
+      if (state.achievementDismissed) {
+        return; // Don't update if dismissed
+      }
+      
+      if (state.status === 'red' || state.battery < 30) {
+        elements.achievement.className = 'achievement warning';
+        elements.achievement.querySelector('.icon').textContent = '⚠️';
+        elements.achievementTitle.textContent = `Battery low: ${Math.round(state.battery)}% remaining`;
+        elements.achievementSubtitle.textContent = 'Reduce power usage to extend runtime';
+      } else if (state.status === 'green') {
+        elements.achievement.className = 'achievement';
+        elements.achievement.querySelector('.icon').textContent = '🎯';
+        elements.achievementTitle.textContent = `Energy saved today: ${state.energySaved} minutes`;
+        elements.achievementSubtitle.textContent = `Efficient operation streak: ${state.streak} min`;
+        
+        // Increment streak when in green
+        if (Math.random() > 0.7) state.streak++;
+      } else {
+        elements.achievement.className = 'achievement';
+        elements.achievement.querySelector('.icon').textContent = '💡';
+        elements.achievementTitle.textContent = `Energy saved today: ${state.energySaved} minutes`;
+        elements.achievementSubtitle.textContent = `Small adjustments can improve efficiency`;
+      }
+    }
+
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    TASK-AWARE SUGGESTION GENERATION
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    PURPOSE:
+    Provide contextually appropriate, actionable power recommendations based on
+    the current task and conditions.
+    
+    DESIGN PHILOSOPHY:
+    
+    Bad suggestion systems:
+    ❌ "You're using too much power" (judgmental, vague)
+    ❌ "Efficiency could be improved" (no action specified)
+    ❌ "Reduce power for wet conditions" (wrong for mowing!)
+    
+    Good suggestion systems:
+    ✅ "Wet grass - Level 4-5 needed for effective cutting" (specific, explains why)
+    ✅ "Current: Level 5 → Suggested: Level 3" (clear action)
+    ✅ "⚡ Will add ~8 min runtime" (quantified benefit)
+    
+    SUGGESTION ALGORITHM:
+    
+    Step 1: CHECK IF SUGGESTION NEEDED
+    - If status = GREEN (optimal), hide suggestion card entirely
+    - No need to distract operator when they're doing well
+    - Removes visual clutter during efficient operation
+    
+    Step 2: DETERMINE POWER DEVIATION TYPE
+    
+    TOO HIGH:
+    - Current power > optimal range maximum
+    - Wasting energy for current task/conditions
+    - Suggest reducing to optimal maximum
+    - Example: "Reduce to Level 4 - unnecessary motor strain"
+    
+    TOO LOW:
+    - Current power < optimal range minimum
+    - Risk of poor task performance (clogging, missed debris, etc.)
+    - Suggest increasing to optimal minimum
+    - Example: "Increase power - wet grass requires more cutting force"
+    
+    WITHIN RANGE BUT NOT GREEN:
+    - Power is technically optimal but efficiency score is low
+    - Could be operator behavior (jerky throttle, etc.)
+    - Suggest settling in middle of optimal range
+    - Example: "Smooth throttle control improves efficiency"
+    
+    Step 3: SELECT APPROPRIATE MESSAGE
+    - Each task profile contains pre-written suggestions
+    - Messages explain WHY the suggestion matters
+    - Language is supportive, not critical
+    
+    Step 4: CALCULATE RUNTIME BENEFIT
+    - Estimate minutes saved by following suggestion
+    - Based on power level difference
+    - Rule of thumb: ~4 minutes per power level
+    - Makes benefit tangible and motivating
+    
+    ONE-TAP APPLICATION:
+    
+    The "Apply Now" button:
+    - Shows pulsing animation to draw attention
+    - Adjusts power to suggested level when clicked
+    - Immediately improves efficiency score
+    - Removes pulse animation after application
+    - Provides audio feedback (if enabled)
+    
+    In production, this would:
+    - Send command to motor controller
+    - Log operator acceptance for AI learning
+    - Track suggestion effectiveness over time
+    - Refine suggestions based on outcomes
+    
+    CRITICAL DESIGN DECISION:
+    Suggestions are task-specific because the same conditions require DIFFERENT
+    actions depending on what the operator is doing. This prevents the system
+    from giving counterproductive advice that would erode operator trust.
+    */
+    
+    // Update suggestion card
+    function updateSuggestion() {
+      const { currentTask, wetSurface, powerLevel, status } = state;
+      const profile = taskProfiles[currentTask];
+      const optimalRange = wetSurface ? profile.wetOptimal : profile.dryOptimal;
+      const suggestions = wetSurface ? profile.suggestions.wet : profile.suggestions.dry;
+      
+      if (status === 'green') {
+        elements.suggestionCard.style.display = 'none';
+        elements.applyBtn.classList.remove('pulse');
+      } else {
+        elements.suggestionCard.style.display = 'block';
+        elements.applyBtn.classList.add('pulse');
+        
+        // Determine if power is too high or too low
+        const tooHigh = powerLevel > optimalRange[1];
+        const tooLow = powerLevel < optimalRange[0];
+        
+        // Get appropriate suggestion text
+        let suggestionText;
+        if (tooHigh) {
+          suggestionText = suggestions.tooHigh;
+          state.suggestedPowerLevel = optimalRange[1];
+        } else if (tooLow) {
+          suggestionText = suggestions.tooLow;
+          state.suggestedPowerLevel = optimalRange[0];
+        } else {
+          suggestionText = suggestions.optimal;
+          state.suggestedPowerLevel = Math.round((optimalRange[0] + optimalRange[1]) / 2);
+        }
+        
+        elements.suggestionText.textContent = suggestionText;
+        elements.suggestionCard.querySelector('.current').textContent = `Level ${powerLevel}`;
+        elements.suggestionCard.querySelector('.suggested').textContent = `Level ${state.suggestedPowerLevel}`;
+        
+        // Calculate estimated runtime benefit
+        const powerDiff = Math.abs(powerLevel - state.suggestedPowerLevel);
+        const runtimeBenefit = powerDiff * 4; // ~4 minutes per power level
+        elements.impact.textContent = `⚡ Will add ~${runtimeBenefit} min runtime`;
+      }
+    }
+
+    // Calculate runtime
+    function calculateRuntime() {
+      const hours = Math.floor(state.battery / 20);
+      const minutes = Math.floor((state.battery % 20) * 3);
+      return `${hours}h ${minutes}min`;
+    }
+
+    // Update task display
+    function updateTaskDisplay() {
+      const profile = taskProfiles[state.currentTask];
+      elements.taskIcon.textContent = profile.icon;
+      elements.taskName.textContent = profile.name;
+      elements.taskDetails.textContent = profile.details;
+    }
+
+    // Main render function
+    function render() {
+      // Task display
+      updateTaskDisplay();
+      
+      // Battery
+      elements.batteryFill.style.width = `${Math.round(state.battery)}%`;
+      elements.batteryPercent.textContent = `${Math.round(state.battery)}%`;
+      elements.runtime.textContent = calculateRuntime();
+      
+      // Efficiency score
+      elements.effScore.textContent = state.efficiency;
+      
+      // Traffic light
+      updateTrafficLight();
+      
+      // Achievement
+      updateAchievement();
+      
+      // Suggestion
+      updateSuggestion();
+      
+      // Sensor data
+      elements.surface.textContent = state.wetSurface ? 'Wet – High Drag' : 'Dry – Normal';
+      elements.humidity.textContent = `${state.humidity}%`;
+      
+      // Display load level based on loadLevel value
+      const loadText = state.loadLevel >= 4 ? 'High' : 
+                       state.loadLevel >= 3 ? 'Medium-High' : 
+                       state.loadLevel >= 2 ? 'Medium' : 'Low';
+      elements.load.textContent = loadText;
+      
+      // Telemetry
+      const basePower = 4.5;
+      const powerMultiplier = state.wetSurface ? 1.3 : 1.0;
+      elements.powerDraw.textContent = `${(basePower * powerMultiplier).toFixed(1)} kW`;
+      
+      // Update sync time
+      const now = new Date();
+      elements.syncTime.textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+    }
+
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    DYNAMIC SIMULATION LOOP
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    PURPOSE:
+    Simulate real-world operating conditions to demonstrate how the EAAS responds
+    to changing tasks, weather, and battery levels throughout a work shift.
+    
+    RUNS EVERY 3 SECONDS to update:
+    - Battery level (simulated drain)
+    - Efficiency scores
+    - Environmental conditions
+    - Task changes (attachment switches)
+    - Load variations
+    
+    SIMULATION COMPONENTS:
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ 1. BATTERY DRAIN SIMULATION                                         │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Drain rate varies by efficiency status:                             │
+    │ • RED (inefficient): 1.5x faster drain                              │
+    │ • YELLOW (caution): 1.0x normal drain                               │
+    │ • GREEN (optimal): 0.7x slower drain                                │
+    │                                                                      │
+    │ This demonstrates the REAL IMPACT of efficient operation:           │
+    │ An operator in green zone can work 50% longer on same battery!      │
+    │                                                                      │
+    │ In production, this would come from:                                │
+    │ • Actual battery management system (BMS) data                       │
+    │ • Real-time amp-hour consumption                                    │
+    │ • Temperature-compensated capacity calculations                     │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ 2. EFFICIENCY SCORE FLUCTUATIONS                                    │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Efficiency score reflects operator behavior quality:                │
+    │ • Base score determined by current status                           │
+    │ • Random fluctuations simulate throttle variations                  │
+    │ • Demonstrates that behavior matters, not just power setting        │
+    │                                                                      │
+    │ In production, this would be calculated from:                       │
+    │ • Motor controller data (actual vs theoretical power usage)         │
+    │ • Throttle smoothness metrics                                       │
+    │ • Task completion rate vs energy consumed                           │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ 3. ENVIRONMENTAL CONDITION CHANGES                                  │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Weather and surface conditions change occasionally (5% chance):     │
+    │ • Wet ↔ Dry transitions                                             │
+    │ • Humidity adjusts accordingly                                      │
+    │                                                                      │
+    │ This tests the system's response to:                                │
+    │ • Moving from dry area to wet area of field                         │
+    │ • Morning dew drying during shift                                   │
+    │ • Rain starting mid-operation                                       │
+    │                                                                      │
+    │ Critically, optimal power changes when conditions change!           │
+    │ System must adapt recommendations accordingly.                      │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ 4. LOAD VARIATIONS                                                  │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Load sensor readings fluctuate naturally:                           │
+    │ • Cutting through thick vs thin grass                               │
+    │ • Vacuuming heavy debris piles vs scattered leaves                  │
+    │ • Driving uphill vs flat terrain                                    │
+    │                                                                      │
+    │ Load changes affect task detection and suggestions.                 │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ 5. TASK SWITCHING (Auto-Detection Demo)                            │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ Occasionally (2% chance), operator switches tasks:                  │
+    │ • Mowing → Vacuuming → Sweeping → Transport                         │
+    │                                                                      │
+    │ When task changes:                                                  │
+    │ 1. Load level adjusts (different attachments, different resistance) │
+    │ 2. Attachment status updates (PTO on/off)                           │
+    │ 3. Task display updates immediately                                 │
+    │ 4. Optimal power range changes                                      │
+    │ 5. Suggestions become task-appropriate                              │
+    │                                                                      │
+    │ This demonstrates the CRITICAL importance of auto-detection:        │
+    │ Same power level can be optimal or wasteful depending on task!      │
+    │                                                                      │
+    │ Between explicit task switches, continuous auto-detection runs      │
+    │ to handle gradual changes in operating conditions.                  │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ 6. POSITIVE REINFORCEMENT                                           │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ When in green zone, occasionally increment:                         │
+    │ • Energy saved counter (cumulative benefit)                         │
+    │ • Efficiency streak (consecutive good behavior)                     │
+    │                                                                      │
+    │ This gamification element motivates continued efficient operation.  │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    WHY THIS SIMULATION MATTERS:
+    
+    For prototype testing, this simulation:
+    - Demonstrates system behavior across diverse scenarios
+    - Shows how suggestions adapt to changing contexts
+    - Proves task-awareness prevents bad recommendations
+    - Tests UI responsiveness and clarity
+    - Validates traffic light hysteresis (no flicker)
+    
+    For production deployment, Egholm would replace this with:
+    - Real sensor integration (CAN bus, motor controllers)
+    - Actual battery management system data
+    - GPS/telematics for route and task logging
+    - Machine learning models trained on fleet data
+    */
+    
+    // Simulation loop
+    setInterval(() => {
+      // Simulate battery drain (faster when inefficient)
+      const drainRate = state.status === 'red' ? 1.5 : (state.status === 'yellow' ? 1.0 : 0.7);
+      state.battery = Math.max(5, state.battery - (Math.random() * drainRate * 0.3));
+      
+      // Simulate efficiency fluctuations
+      const efficiencyBase = state.status === 'green' ? 78 : (state.status === 'yellow' ? 68 : 58);
+      state.efficiency = Math.max(50, Math.round(efficiencyBase + (Math.random() * 10 - 5)));
+      
+      // Occasionally change conditions
+      if (Math.random() > 0.95) {
+        state.wetSurface = !state.wetSurface;
+        state.humidity = state.wetSurface ? Math.floor(70 + Math.random() * 20) : Math.floor(40 + Math.random() * 20);
+      }
+      
+      // Simulate load variations (affects task detection)
+      state.loadLevel = Math.max(1, Math.min(5, state.loadLevel + (Math.random() * 2 - 1)));
+      
+      // Occasionally change task (simulates operator switching attachments)
+      if (Math.random() > 0.98) {
+        // Simulate task change
+        const tasks = ['mowing', 'vacuuming', 'sweeping', 'transport'];
+        const newTask = tasks[Math.floor(Math.random() * tasks.length)];
+        state.currentTask = newTask;
+        
+        // Adjust load and power based on new task
+        if (newTask === 'mowing') {
+          state.loadLevel = 4 + Math.random();
+          state.attachmentActive = true;
+        } else if (newTask === 'vacuuming') {
+          state.loadLevel = 3 + Math.random();
+          state.attachmentActive = true;
+        } else if (newTask === 'sweeping') {
+          state.loadLevel = 2.5 + Math.random();
+          state.attachmentActive = true;
+        } else {
+          state.loadLevel = 1.5 + Math.random();
+          state.attachmentActive = false;
+        }
+      } else {
+        // Auto-detect task from sensors
+        state.currentTask = detectTask();
+      }
+      
+      // Occasionally improve energy saved
+      if (state.status === 'green' && Math.random() > 0.8) {
+        state.energySaved++;
+      }
+      
+      render();
+    }, 3000);
+
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    USER INTERACTION HANDLERS
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    These handlers respond to operator button clicks and toggles.
+    
+    DESIGN PRINCIPLE: Immediate feedback
+    - Every click should produce an instant response
+    - Visual changes confirm action was registered
+    - Audio feedback (if enabled) reinforces the action
+    - No delays, no loading states (everything is instant)
+    */
+    
+    // Button interactions
+    
+    // APPLY SUGGESTION BUTTON
+    // When operator accepts the system's power recommendation
+    elements.applyBtn.addEventListener('click', () => {
+      // In production, this would:
+      // 1. Send command to motor controller via CAN bus
+      // 2. Log operator acceptance for ML training
+      // 3. Track suggestion effectiveness over time
+      
+      // For prototype: Simulate power adjustment
+      state.powerLevel = state.suggestedPowerLevel;
+      state.efficiency = Math.min(95, state.efficiency + 15);  // Immediate improvement
+      elements.applyBtn.classList.remove('pulse');  // Stop pulsing animation
+      
+      // Optional audio feedback
+      if (state.audioEnabled) {
+        console.log('✅ Audio: Power adjusted – efficiency improved');
+        // In production: Play gentle confirmation chime
+      }
+      render();  // Update UI immediately
+    });
+
+    // AUDIO TOGGLE
+    // Allows operator to enable/disable audio feedback
+    elements.audioToggle.addEventListener('click', () => {
+      state.audioEnabled = !state.audioEnabled;
+      elements.audioToggle.classList.toggle('on');  // Visual toggle state
+      console.log(`Audio feedback: ${state.audioEnabled ? 'enabled' : 'disabled'}`);
+      
+      // In production, this preference would be:
+      // - Saved to operator profile
+      // - Synced across fleet if operator switches tractors
+      // - Remembered between work sessions
+    });
+
+    // ACHIEVEMENT BANNER DISMISS
+    // Operator can hide the achievement banner for cleaner view
+    elements.closeAchievement.addEventListener('click', () => {
+      state.achievementDismissed = true;
+      elements.achievement.classList.add('hidden');
+      
+      // Banner will reappear if status becomes critical (red or low battery)
+      // This ensures safety information isn't permanently hidden
+    });
+
+    // TIPS PANEL TOGGLE
+    // Shows inline operator guidance (no popup!)
+    elements.tipsBtn.addEventListener('click', () => {
+      elements.logPanel.classList.remove('show');  // Close other panel
+      elements.tipsPanel.classList.toggle('show');  // Toggle tips panel
+      
+      // In production, tips could be:
+      // - Personalized based on operator history
+      // - Task-specific (different tips for each attachment)
+      // - Seasonal (different advice for summer vs winter)
+    });
+
+    elements.closeTips.addEventListener('click', () => {
+      elements.tipsPanel.classList.remove('show');
+    });
+
+    // LOG PANEL TOGGLE
+    // Shows operation history and daily summary (no popup!)
+    elements.logBtn.addEventListener('click', () => {
+      elements.tipsPanel.classList.remove('show');  // Close other panel
+      elements.logPanel.classList.toggle('show');    // Toggle log panel
+      
+      // In production, this would show:
+      // - Detailed minute-by-minute energy usage
+      // - Task breakdown (time spent on each operation)
+      // - Efficiency trends over week/month
+      // - Comparison to fleet average
+    });
+
+    elements.closeLog.addEventListener('click', () => {
+      elements.logPanel.classList.remove('show');
+    });
+
+    // Initial render
+    render();
+    
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    SYSTEM BENEFITS & FUTURE DEVELOPMENT
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    DEMONSTRATED BENEFITS:
+    
+    1. FOR OPERATORS:
+       ✓ Extends runtime without sacrificing performance
+       ✓ Provides clear, actionable guidance
+       ✓ Respects autonomy (no forced restrictions)
+       ✓ Reduces cognitive load (glanceable feedback)
+       ✓ Positive reinforcement feels good
+    
+    2. FOR MUNICIPALITIES (Customers):
+       ✓ Lower operating costs (extended battery life)
+       ✓ Predictable runtime for route planning
+       ✓ Documented efficiency improvements
+       ✓ Reduced total cost of ownership
+       ✓ Sustainability metrics for ESG reporting
+    
+    3. FOR EGHOLM:
+       ✓ Competitive differentiation (intelligent tractors)
+       ✓ Reduces pressure for larger batteries (25% of cost!)
+       ✓ Foundation for telematics and AI optimization
+       ✓ Customer data for product improvement
+       ✓ Premium feature for higher margins
+    
+    FUTURE DEVELOPMENT PATH:
+    
+    Phase 1: BASIC IMPLEMENTATION (This prototype demonstrates)
+    ├─ Task auto-detection from sensors
+    ├─ Real-time efficiency feedback
+    ├─ Task-specific power recommendations
+    └─ Basic positive reinforcement
+    
+    Phase 2: TELEMATICS INTEGRATION
+    ├─ Cloud connectivity for fleet data
+    ├─ Remote monitoring for fleet managers
+    ├─ Aggregated efficiency benchmarking
+    ├─ Over-the-air suggestion updates
+    └─ Detailed energy analytics dashboard
+    
+    Phase 3: MACHINE LEARNING ENHANCEMENT
+    ├─ Predictive battery runtime (route-specific)
+    ├─ Personalized suggestions per operator
+    ├─ Automatic profile refinement from usage data
+    ├─ Anomaly detection (maintenance prediction)
+    └─ Multi-task optimization (route planning)
+    
+    Phase 4: GAMIFICATION & SOCIAL
+    ├─ Operator leaderboards (within organization)
+    ├─ Achievement badges and milestones
+    ├─ Team challenges (department competitions)
+    ├─ Efficiency improvement coaching programs
+    └─ Recognition for top-performing operators
+    
+    Phase 5: ECOSYSTEM INTEGRATION
+    ├─ Weather API integration (proactive suggestions)
+    ├─ Fleet management system integration
+    ├─ Carbon footprint tracking and reporting
+    ├─ Maintenance scheduling optimization
+    └─ Smart charging recommendations
+    
+    TECHNICAL REQUIREMENTS FOR PRODUCTION:
+    
+    HARDWARE:
+    • CAN bus integration for motor controller data
+    • Torque/load sensors on PTO and hydraulics
+    • GPS module for location and speed
+    • 4G/5G modem for telematics (optional Phase 2)
+    • Ruggedized touchscreen display (operator interface)
+    
+    SOFTWARE:
+    • Real-time operating system (safety-critical)
+    • Battery management system integration
+    • Local data logging (SD card backup)
+    • Edge computing for instant recommendations
+    • Cloud backend for fleet analytics (Phase 2)
+    
+    CALIBRATION:
+    • Baseline testing: Egholm's controlled environment tests
+    • Field calibration: Initial customer pilot programs
+    • Continuous refinement: Telemetry data analysis
+    • Seasonal adjustments: Temperature compensation
+    
+    DATA PRIVACY & ETHICS:
+    • Operator anonymization (no individual tracking)
+    • Opt-in for detailed data sharing
+    • Clear communication about what's measured
+    • Data used for improvement, not surveillance
+    • GDPR compliance for European markets
+    
+    BUSINESS MODEL IMPLICATIONS:
+    
+    1. DIFFERENTIATION:
+       "Egholm tractors work smarter, not harder"
+       Unique selling point in competitive market
+    
+    2. PREMIUM PRICING:
+       EAAS can justify 5-10% price increase
+       ROI for customers: extended runtime = lower TCO
+    
+    3. SERVICE REVENUE:
+       Optional telematics subscription for fleet management
+       Analytics dashboards for large customers
+    
+    4. SUSTAINABILITY MARKETING:
+       Documented energy savings for ESG reporting
+       Appeals to environmentally-conscious municipalities
+    
+    KEY SUCCESS METRICS:
+    
+    Technical:
+    • Average runtime extension: Target 15-20%
+    • Operator adoption rate: Target >85%
+    • Suggestion acceptance rate: Target >60%
+    
+    Business:
+    • Customer satisfaction increase
+    • Reduction in battery warranty claims
+    • Decrease in "insufficient runtime" complaints
+    
+    Sustainability:
+    • kWh saved per tractor per year
+    • CO₂ equivalent reduction
+    • Extended battery lifecycle
+    
+    ═══════════════════════════════════════════════════════════════════════════
+    FINAL NOTE:
+    
+    The "Hard Nut" was never just about batteries. It was about the gap between
+    what machines CAN do and what operators DO with them. EAAS bridges that gap
+    through intelligent design, behavioral psychology, and contextual awareness.
+    
+    By respecting operators as skilled professionals and providing them with
+    intelligent support (not restrictions), we transform energy efficiency from
+    a hardware limitation into a competitive advantage.
+    
+    This is how you extend runtime without bigger batteries.
+    This is how you respect both physics and human nature.
+    This is the Energy-Aware Assistance System.
+    ═══════════════════════════════════════════════════════════════════════════
+    */
+  </script>
+</body>
+</html>

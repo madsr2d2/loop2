@@ -17,6 +17,137 @@
 \endgroup
 
 \datalist[entry]{none/global//global/global}
+  \entry{eu_green_deal}{online}{}
+    \name{author}{1}{}{%
+      {{hash=E}{%
+         family={{European Commission}},
+         familyi={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{E1}
+    \strng{fullhash}{E1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{The European Green Deal}
+    \verb{url}
+    \verb https://commission.europa.eu/strategy-and-policy/priorities-2019-2024
+    \verb /european-green-deal_en
+    \endverb
+    \field{year}{2019}
+  \endentry
+
+  \entry{designcouncil2005}{online}{}
+    \name{author}{1}{}{%
+      {{hash=D}{%
+         family={{Design Council}},
+         familyi={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{D1}
+    \strng{fullhash}{D1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{The Double Diamond Framework}
+    \verb{url}
+    \verb https://www.designcouncil.org.uk/our-work/news-opinion/double-diamond
+    \verb -universally-accepted-depiction-design-process/
+    \endverb
+    \field{year}{2005}
+  \endentry
+
+  \entry{norman2013design}{book}{}
+    \name{author}{1}{}{%
+      {{hash=ND}{%
+         family={Norman},
+         familyi={N\bibinitperiod},
+         given={Don},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Basic books}%
+    }
+    \strng{namehash}{ND1}
+    \strng{fullhash}{ND1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{The design of everyday things}
+    \field{year}{2013}
+  \endentry
+
+  \entry{thaler2008nudge}{book}{}
+    \name{author}{2}{}{%
+      {{hash=TRH}{%
+         family={Thaler},
+         familyi={T\bibinitperiod},
+         given={Richard\bibnamedelima H},
+         giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+      {{hash=SCR}{%
+         family={Sunstein},
+         familyi={S\bibinitperiod},
+         given={Cass\bibnamedelima R},
+         giveni={C\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Yale University Press}%
+    }
+    \strng{namehash}{TRHSCR1}
+    \strng{fullhash}{TRHSCR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Nudge: Improving decisions about health, wealth, and
+  happiness}
+    \field{year}{2008}
+  \endentry
+
+  \entry{bnef2023}{report}{}
+    \name{author}{1}{}{%
+      {{hash=B}{%
+         family={{BloombergNEF}},
+         familyi={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{B1}
+    \strng{fullhash}{B1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Electric Vehicle Outlook 2023}
+    \list{institution}{1}{%
+      {Bloomberg Finance LP}%
+    }
+    \field{type}{techreport}
+    \field{year}{2023}
+  \endentry
+
+  \entry{osterwalder2010business}{book}{}
+    \name{author}{2}{}{%
+      {{hash=OA}{%
+         family={Osterwalder},
+         familyi={O\bibinitperiod},
+         given={Alexander},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=PY}{%
+         family={Pigneur},
+         familyi={P\bibinitperiod},
+         given={Yves},
+         giveni={Y\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons}%
+    }
+    \strng{namehash}{OAPY1}
+    \strng{fullhash}{OAPY1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Business model generation: a handbook for visionaries, game
+  changers, and challengers}
+    \field{year}{2010}
+  \endentry
+
   \entry{eaas-demo}{online}{}
     \name{author}{1}{}{%
       {{hash=AE}{%
