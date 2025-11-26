@@ -26,7 +26,7 @@ Nogle "blødere" funktionaliteter kan være på touch skærm eller lign. "hårde
   Sug kører hele tiden.
   "Flow energy cost" af sugeren er den samme om den suger noget op eller ej. Fejeren og sugeren kan sådan set allerede blive indstillet i, hvor meget energi de bruger.
 
-## Vi spurgte ind til:
+## Vi spurgte ind til
 
 Tester i for hvornår jeres maskiner kører optimalt i forhold til græslængde og hvor vådt ting er i suger op?
 
