@@ -1568,21 +1568,40 @@
       elements.suggestionCard.querySelector('.current').textContent = `Level ${powerLevel}`;
       elements.suggestionCard.querySelector('.suggested').textContent = `Level ${state.suggestedPowerLevel}`;
       
-      // Calculate estimated runtime benefit
-      // Based on engineer's data: "Some attachments 10-15%, others 40-50% improvement"
-      // Use aggressive calculations for demo impact
+      // Calculate impact message based on direction of change
+      // CRITICAL: Only REDUCING power adds runtime (less consumption)
+      //          INCREASING power improves performance but COSTS runtime
+      
       const powerDiff = Math.abs(powerLevel - state.suggestedPowerLevel);
-      let runtimeBenefit;
+      const isReduction = state.suggestedPowerLevel < powerLevel; // Reducing power?
       
-      if (powerDiff === 1) {
-        runtimeBenefit = 18 + Math.floor(Math.random() * 5); // 18-22 min (~10-15% improvement)
-      } else if (powerDiff === 2) {
-        runtimeBenefit = 28 + Math.floor(Math.random() * 8); // 28-35 min (~20-30% improvement)
+      if (isReduction) {
+        // REDUCING POWER = ENERGY SAVINGS = LONGER RUNTIME
+        // Based on engineer's data: "Some attachments 10-15%, others 40-50% improvement"
+        let runtimeBenefit;
+        
+        if (powerDiff === 1) {
+          runtimeBenefit = 18 + Math.floor(Math.random() * 5); // 18-22 min (~10-15% improvement)
+        } else if (powerDiff === 2) {
+          runtimeBenefit = 28 + Math.floor(Math.random() * 8); // 28-35 min (~20-30% improvement)
+        } else {
+          runtimeBenefit = 40 + Math.floor(Math.random() * 12); // 40-52 min (~40-50% improvement)
+        }
+        
+        elements.impact.textContent = `⚡ Will add ~${runtimeBenefit} min runtime`;
+        
       } else {
-        runtimeBenefit = 40 + Math.floor(Math.random() * 12); // 40-52 min (~40-50% improvement)
+        // INCREASING POWER = BETTER PERFORMANCE = COSTS RUNTIME
+        // Don't claim energy savings! Explain the performance benefit instead
+        
+        if (state.wetSurface) {
+          // Wet conditions need more power for effective operation
+          elements.impact.textContent = `⚙️ Needed for effective operation in wet conditions`;
+        } else {
+          // Increasing power for better performance/preventing issues
+          elements.impact.textContent = `⚙️ Improves performance and prevents clogging/inefficiency`;
+        }
       }
-      
-      elements.impact.textContent = `⚡ Will add ~${runtimeBenefit} min runtime`;
     }
 
     // Calculate runtime

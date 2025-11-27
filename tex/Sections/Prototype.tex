@@ -46,11 +46,10 @@ To prevent distraction, the system implements a \textbf{3-second hysteresis} (de
 \subsection{Behavioral Features}
 The prototype implements specific features to drive behavioral change:
 
-\subsubsection*{Actionable Suggestions}
-When the system detects inefficiency (Yellow/Red state), it generates a "Suggestion Card." Crucially, this card quantifies the benefit (e.g., "Energy: Will add ~12 min runtime") and offers a single "Apply Now" button. This reduces the friction of making an adjustment—the operator does not need to guess the correct setting, only to approve the system's recommendation.
-
-\subsubsection*{Positive Reinforcement}
-Drawing on behavioral psychology, the UI emphasizes rewards over penalties. Integrated metrics, such as "Time in Green Zone", track how long the operator has maintained optimal efficiency, and an "Energy Saved" metric accumulates throughout the shift. This gamification element encourages operators to maintain their efficiency, turning energy saving into a personal achievement.
+\begin{description}
+	\item[Actionable Suggestions:] When the system detects inefficiency (Yellow/Red state), it generates a "Suggestion Card." If power is too high, it quantifies the saving (e.g., "Energy: Will add ~12 min runtime"). If power is too low for conditions, it explains the operational risk (e.g., "Increase power to prevent clogging"). This reduces the friction of making an adjustment—the operator does not need to guess the correct setting, only to approve the system's recommendation.
+	\item[Positive Reinforcement:] Drawing on behavioral psychology, the UI emphasizes rewards over penalties. Integrated metrics, such as "Time in Green Zone", track how long the operator has maintained optimal efficiency, and an "Energy Saved" metric accumulates throughout the shift. This gamification element encourages operators to maintain their efficiency, turning energy saving into a personal achievement.
+\end{description}
 
 \subsection{Simulation \& Validation}
 The prototype includes a dynamic simulation loop that runs every 3 seconds to mimic real-world variability. It simulates battery drain (which accelerates in Red status), fluctuating efficiency scores, and changing weather conditions (Wet/Dry). This allowed us to verify that the auto-detection logic correctly adapts recommendations—for instance, advising higher power for mowing when "rain" is simulated, but lower power for vacuuming under the same conditions.
