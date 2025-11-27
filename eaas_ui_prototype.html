@@ -238,37 +238,42 @@
       font-weight:600;
       font-size:15px;
     }
-    .suggestion-action{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-top:12px;
-    }
     .power-compare{
       display:flex;
       align-items:center;
+      justify-content:center;
       gap:8px;
-      flex:1;
-      font-size:14px;
+      font-size:16px;
+      margin-top:12px;
+      padding:8px;
+      background:rgba(255,255,255,0.03);
+      border-radius:6px;
     }
     .power-compare .current{color:var(--warn);font-weight:600;}
     .power-compare .arrow{color:var(--muted);}
     .power-compare .suggested{color:var(--green);font-weight:700;}
-    .suggestion-action .btn{
-      padding:10px 20px;
+    .impact{font-size:13px;color:var(--accent);margin-top:8px;font-weight:600;text-align:center;}
+    
+    /* Full-width suggestion button at bottom */
+    .suggestion-apply-btn{
+      width:100%;
+      padding:14px 20px;
+      margin-top:12px;
       border-radius:8px;
       border:0;
       background:var(--green);
       color:#072014;
       font-weight:700;
       cursor:pointer;
-      font-size:14px;
+      font-size:16px;
       transition:all 0.2s;
       white-space:nowrap;
     }
-    .suggestion-action .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(34,197,94,0.4);}
-    .suggestion-action .btn:active{transform:translateY(0);}
-    .impact{font-size:13px;color:var(--accent);margin-top:8px;font-weight:600;}
+    .suggestion-apply-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(34,197,94,0.4);}
+    .suggestion-apply-btn:active{transform:translateY(0);}
+    .suggestion-apply-btn.pulse{
+      animation:button-pulse 2s infinite;
+    }
 
     /* Sensors - Compact Grid */
     .sensors{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
@@ -403,22 +408,6 @@
 </head>
 <body>
   <div class="app" id="appContainer">
-    <header>
-      <div class="brand">
-        <div class="logo">EA</div>
-        <div class="title">
-          <h1>Energy Aware Assistance – Improved UI</h1>
-          <p>Operator dashboard · runtime simulation</p>
-        </div>
-      </div>
-      <div class="meta">
-        <div style="text-align:right">
-          <div style="font-weight:700">E-Tractor #42</div>
-          <div style="color:var(--muted);font-size:13px">Location: Lemvig – Shift: Morning</div>
-        </div>
-      </div>
-    </header>
-
     <div class="grid">
       <div class="card status">
         <!-- Current Task Display -->
@@ -463,31 +452,19 @@
           </div>
         </div>
 
-        <!-- Positive Reinforcement / Warning -->
-        <div class="achievement" id="achievement">
-          <div class="icon">🎯</div>
-          <div class="text">
-            <div class="title" id="achievementTitle">Energy saved today: 18 minutes</div>
-            <div class="subtitle" id="achievementSubtitle">Efficient operation streak: 24 min</div>
-          </div>
-          <button class="close-btn" id="closeAchievement" aria-label="Dismiss">×</button>
-        </div>
-
         <!-- Actionable Suggestion -->
         <div class="suggestion-card" id="suggestionCard">
           <div class="suggestion-header">
             <span class="icon">💡</span>
             <span class="text" id="suggestionText">Reduce suction power for dry conditions</span>
           </div>
-          <div class="suggestion-action">
-            <div class="power-compare">
-              <span class="current">Level 5</span>
-              <span class="arrow">→</span>
-              <span class="suggested">Level 3</span>
-            </div>
-            <button class="btn" id="applyBtn">Apply Now</button>
+          <div class="power-compare">
+            <span class="current">Level 5</span>
+            <span class="arrow">→</span>
+            <span class="suggested">Level 3</span>
           </div>
           <div class="impact" id="impact">⚡ Will add ~12 min runtime</div>
+          <button class="btn suggestion-apply-btn" id="applyBtn">Apply Now</button>
         </div>
 
         <!-- Secondary: Sensor Data (Simplified) -->
@@ -626,6 +603,126 @@
   </div>
 
   <script>
+    /*
+    ═══════════════════════════════════════════════════════════════════════════
+    AUDIO FEEDBACK SYSTEM - IMPROVED SOUNDS
+    ═══════════════════════════════════════════════════════════════════════════
+    
+    PURPOSE:
+    Provide lightweight, pleasant audible feedback for operator actions.
+    Uses Web Audio API to generate professional-quality tones programmatically.
+    
+    DESIGN FOR MOBILE/SMARTPHONE:
+    - Web Audio API is supported on all modern smartphones
+    - Tones are generated on-the-fly (zero file size)
+    - Works offline (no network dependency)
+    - Very low CPU/battery usage
+    
+    IMPROVED AUDIO DESIGN:
+    - Multi-layered tones for richer, more pleasant sound
+    - Musical intervals for harmonious feedback
+    - Smooth attack/decay envelopes (no harsh clicks)
+    - Professional notification-style sounds
+    
+    AUDIO TYPES:
+    1. Success: Uplifting 3-tone ascending chord (sounds like achievement)
+    2. Positive: Warm major chord (rewarding, pleasant)
+    3. Alert: Gentle descending interval (attention without stress)
+    */
+    
+    // Initialize Web Audio API context (lazy initialization for mobile compatibility)
+    let audioContext = null;
+    let lastAudioPlayTime = 0; // Track when audio last played
+    const AUDIO_COOLDOWN_MS = 400; // Minimum 400ms between audio events
+    
+    function getAudioContext() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioContext;
+    }
+    
+    // Check if enough time has passed since last audio
+    function canPlayAudio() {
+      const now = Date.now();
+      if (now - lastAudioPlayTime < AUDIO_COOLDOWN_MS) {
+        return false; // Too soon after last sound
+      }
+      lastAudioPlayTime = now;
+      return true;
+    }
+    
+    // Play a tone with smooth envelope (prevents clicks)
+    function playToneWithEnvelope(frequency, duration, delay = 0, volume = 0.15) {
+      try {
+        const ctx = getAudioContext();
+        const startTime = ctx.currentTime + delay;
+        
+        // Create oscillator
+        const oscillator = ctx.createOscillator();
+        oscillator.type = 'sine'; // Smooth, pleasant waveform
+        oscillator.frequency.setValueAtTime(frequency, startTime);
+        
+        // Create gain node with smooth envelope
+        const gainNode = ctx.createGain();
+        gainNode.gain.setValueAtTime(0, startTime); // Start silent
+        gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.02); // Quick attack
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration / 1000); // Smooth decay
+        
+        // Connect nodes
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        // Play
+        oscillator.start(startTime);
+        oscillator.stop(startTime + duration / 1000);
+      } catch (error) {
+        console.log('Audio playback not supported:', error);
+      }
+    }
+    
+    // Success sound - uplifting 3-tone ascending arpeggio (C-E-G major chord)
+    // Sounds like a notification from a well-designed app
+    function playSuccessSound() {
+      if (!canPlayAudio()) return; // Prevent overlapping sounds
+      
+      // C5 (523.25 Hz) - Root
+      playToneWithEnvelope(523.25, 120, 0, 0.12);
+      
+      // E5 (659.25 Hz) - Major third
+      playToneWithEnvelope(659.25, 140, 0.08, 0.14);
+      
+      // G5 (783.99 Hz) - Perfect fifth
+      playToneWithEnvelope(783.99, 180, 0.16, 0.16);
+      
+      // Add subtle harmonic overtone for warmth
+      playToneWithEnvelope(1046.50, 150, 0.08, 0.04); // C6 (octave above)
+    }
+    
+    // Positive sound - warm major chord (feels rewarding)
+    // Played as a stacked chord, not arpeggio - immediate and satisfying
+    function playPositiveSound() {
+      if (!canPlayAudio()) return; // Prevent overlapping sounds
+      
+      // A4 major chord (A-C#-E)
+      playToneWithEnvelope(440.00, 250, 0, 0.10); // A4 - Root
+      playToneWithEnvelope(554.37, 250, 0, 0.08); // C#5 - Major third
+      playToneWithEnvelope(659.25, 250, 0, 0.10); // E5 - Perfect fifth
+    }
+    
+    // Alert sound - gentle but noticeable descending interval
+    // Uses minor third for subtle tension without being alarming
+    function playAlertSound() {
+      if (!canPlayAudio()) return; // Prevent overlapping sounds
+      
+      // E5 descending to C5 (minor third)
+      playToneWithEnvelope(659.25, 180, 0, 0.14); // E5
+      playToneWithEnvelope(523.25, 200, 0.12, 0.16); // C5
+      
+      // Add subtle low frequency for presence (not too jarring)
+      playToneWithEnvelope(329.63, 250, 0, 0.06); // E4 (octave below)
+    }
+    
     /*
     ═══════════════════════════════════════════════════════════════════════════
     TASK-SPECIFIC POWER PROFILES
@@ -781,7 +878,12 @@
       currentZoneStart: Date.now(),
       currentTask: 'mowing', // Auto-detected task
       loadLevel: 4, // 1-5 scale from sensors
-      attachmentActive: true
+      attachmentActive: true,
+      waitingForUserAction: false, // NEW: Freeze simulation when suggestion is shown
+      lastSuggestionPowerLevel: null, // Track what power level triggered suggestion
+      lastSuggestionTask: null, // Track what task triggered suggestion
+      simulationFrozen: false, // Freeze simulation for 5 sec after applying suggestion
+      simulationFreezeUntil: 0 // Timestamp when freeze expires
     };
 
     // DOM elements
@@ -799,10 +901,6 @@
       batteryFill: document.getElementById('batteryFill'),
       batteryPercent: document.getElementById('batteryPercent'),
       runtime: document.getElementById('runtime'),
-      achievement: document.getElementById('achievement'),
-      achievementTitle: document.getElementById('achievementTitle'),
-      achievementSubtitle: document.getElementById('achievementSubtitle'),
-      closeAchievement: document.getElementById('closeAchievement'),
       suggestionCard: document.getElementById('suggestionCard'),
       suggestionText: document.getElementById('suggestionText'),
       impact: document.getElementById('impact'),
@@ -1121,21 +1219,13 @@
         state.lastStatusChange = now;
         state.currentZoneStart = now;
         
-        // Optional audio feedback (just console log, no popup)
+        // Optional audio feedback
         if (state.audioEnabled) {
           if (newStatus === 'green' && oldStatus !== 'green') {
-            console.log('🎵 Audio: Entering optimal zone');
-            // In real implementation, this would trigger a gentle chime
+            playPositiveSound(); // Play pleasant tone when entering optimal zone
           } else if (newStatus === 'red' && oldStatus !== 'red') {
-            console.log('⚠️ Audio: High energy usage detected');
-            // In real implementation, this would trigger a subtle alert tone
+            playAlertSound(); // Play subtle alert when entering inefficient zone
           }
-        }
-        
-        // Re-show achievement banner on status change if it was dismissed
-        if (state.achievementDismissed && (newStatus === 'red' || state.battery < 30)) {
-          state.achievementDismissed = false;
-          elements.achievement.classList.remove('hidden');
         }
       }
 
@@ -1286,6 +1376,11 @@
     */
     
     // Update achievement/warning section
+    /*
+    // ACHIEVEMENT BANNER REMOVED FROM UI
+    // This function is no longer needed since we removed the achievement/warning banner
+    // to reduce UI clutter. The traffic light and suggestion card provide sufficient feedback.
+    
     function updateAchievement() {
       if (state.achievementDismissed) {
         return; // Don't update if dismissed
@@ -1311,6 +1406,7 @@
         elements.achievementSubtitle.textContent = `Small adjustments can improve efficiency`;
       }
     }
+    */
 
     /*
     ═══════════════════════════════════════════════════════════════════════════
@@ -1399,39 +1495,81 @@
       const optimalRange = wetSurface ? profile.wetOptimal : profile.dryOptimal;
       const suggestions = wetSurface ? profile.suggestions.wet : profile.suggestions.dry;
       
+      // If status is green (optimal), hide suggestions
       if (status === 'green') {
         elements.suggestionCard.style.display = 'none';
         elements.applyBtn.classList.remove('pulse');
-      } else {
-        elements.suggestionCard.style.display = 'block';
-        elements.applyBtn.classList.add('pulse');
-        
-        // Determine if power is too high or too low
-        const tooHigh = powerLevel > optimalRange[1];
-        const tooLow = powerLevel < optimalRange[0];
-        
-        // Get appropriate suggestion text
-        let suggestionText;
-        if (tooHigh) {
-          suggestionText = suggestions.tooHigh;
-          state.suggestedPowerLevel = optimalRange[1];
-        } else if (tooLow) {
-          suggestionText = suggestions.tooLow;
-          state.suggestedPowerLevel = optimalRange[0];
-        } else {
-          suggestionText = suggestions.optimal;
-          state.suggestedPowerLevel = Math.round((optimalRange[0] + optimalRange[1]) / 2);
-        }
-        
-        elements.suggestionText.textContent = suggestionText;
-        elements.suggestionCard.querySelector('.current').textContent = `Level ${powerLevel}`;
-        elements.suggestionCard.querySelector('.suggested').textContent = `Level ${state.suggestedPowerLevel}`;
-        
-        // Calculate estimated runtime benefit
-        const powerDiff = Math.abs(powerLevel - state.suggestedPowerLevel);
-        const runtimeBenefit = powerDiff * 4; // ~4 minutes per power level
-        elements.impact.textContent = `⚡ Will add ~${runtimeBenefit} min runtime`;
+        state.waitingForUserAction = false; // Release simulation freeze
+        return; // Exit early
       }
+      
+      // Proceed with normal suggestion logic
+      // Determine if power is too high or too low
+      const tooHigh = powerLevel > optimalRange[1];
+      const tooLow = powerLevel < optimalRange[0];
+      
+      // Get appropriate suggestion text
+      let suggestionText;
+      if (tooHigh) {
+        suggestionText = suggestions.tooHigh;
+        state.suggestedPowerLevel = optimalRange[1];
+      } else if (tooLow) {
+        suggestionText = suggestions.tooLow;
+        state.suggestedPowerLevel = optimalRange[0];
+      } else {
+        // Within range but not optimal - suggest moving towards better end
+        suggestionText = suggestions.optimal;
+        const middleOfRange = Math.round((optimalRange[0] + optimalRange[1]) / 2);
+        
+        // If current power equals the middle, pick the better direction
+        if (middleOfRange === powerLevel) {
+          // Default to suggesting higher if equal to middle
+          state.suggestedPowerLevel = Math.min(powerLevel + 1, optimalRange[1]);
+        } else {
+          state.suggestedPowerLevel = middleOfRange;
+        }
+      }
+      
+      // CRITICAL FIX: Never suggest the same level as current!
+      // If suggestion equals current level, hide the card entirely
+      if (state.suggestedPowerLevel === powerLevel) {
+        elements.suggestionCard.style.display = 'none';
+        elements.applyBtn.classList.remove('pulse');
+        state.waitingForUserAction = false; // Release simulation freeze
+        return; // Exit early
+      }
+      
+      // Show the suggestion card
+      elements.suggestionCard.style.display = 'block';
+      elements.applyBtn.classList.add('pulse');
+      
+      // FREEZE SIMULATION: Record current state and set flag
+      // This prevents the simulation from randomly fixing the issue before user can act
+      if (!state.waitingForUserAction) {
+        state.waitingForUserAction = true;
+        state.lastSuggestionPowerLevel = powerLevel;
+        state.lastSuggestionTask = currentTask;
+      }
+      
+      elements.suggestionText.textContent = suggestionText;
+      elements.suggestionCard.querySelector('.current').textContent = `Level ${powerLevel}`;
+      elements.suggestionCard.querySelector('.suggested').textContent = `Level ${state.suggestedPowerLevel}`;
+      
+      // Calculate estimated runtime benefit
+      // Based on engineer's data: "Some attachments 10-15%, others 40-50% improvement"
+      // Use aggressive calculations for demo impact
+      const powerDiff = Math.abs(powerLevel - state.suggestedPowerLevel);
+      let runtimeBenefit;
+      
+      if (powerDiff === 1) {
+        runtimeBenefit = 18 + Math.floor(Math.random() * 5); // 18-22 min (~10-15% improvement)
+      } else if (powerDiff === 2) {
+        runtimeBenefit = 28 + Math.floor(Math.random() * 8); // 28-35 min (~20-30% improvement)
+      } else {
+        runtimeBenefit = 40 + Math.floor(Math.random() * 12); // 40-52 min (~40-50% improvement)
+      }
+      
+      elements.impact.textContent = `⚡ Will add ~${runtimeBenefit} min runtime`;
     }
 
     // Calculate runtime
@@ -1465,8 +1603,8 @@
       // Traffic light
       updateTrafficLight();
       
-      // Achievement
-      updateAchievement();
+      // Achievement banner removed from UI
+      // updateAchievement();
       
       // Suggestion
       updateSuggestion();
@@ -1615,31 +1753,96 @@
     
     // Simulation loop
     setInterval(() => {
-      // Simulate battery drain (faster when inefficient)
+      // ═══════════════════════════════════════════════════════════════════════
+      // CHECK 1: Is simulation frozen? (5 seconds after applying suggestion)
+      // ═══════════════════════════════════════════════════════════════════════
+      if (state.simulationFrozen) {
+        const now = Date.now();
+        
+        // Check if freeze period has expired
+        if (now >= state.simulationFreezeUntil) {
+          // Unfreeze - allow simulation to continue
+          state.simulationFrozen = false;
+        } else {
+          // Still frozen - keep everything stable
+          // Only update the display, don't change any state
+          render();
+          return; // Skip all simulation logic
+        }
+      }
+      
+      // ═══════════════════════════════════════════════════════════════════════
+      // CHECK 2: Are we waiting for user action on a suggestion?
+      // ═══════════════════════════════════════════════════════════════════════
+      if (state.waitingForUserAction) {
+        // FREEZE SIMULATION: Don't change task, power, or conditions
+        // The suggestion box is shown and we want it to remain valid
+        // until the operator clicks "Apply Now"
+        
+        // Only update the display, don't change state
+        render();
+        return; // Skip all state changes below
+      }
+      
+      // ═══════════════════════════════════════════════════════════════════════
+      // NORMAL SIMULATION: Update battery drain and efficiency
+      // ═══════════════════════════════════════════════════════════════════════
+      
+      // Always update battery drain and efficiency (these don't affect suggestion validity)
       const drainRate = state.status === 'red' ? 1.5 : (state.status === 'yellow' ? 1.0 : 0.7);
       state.battery = Math.max(5, state.battery - (Math.random() * drainRate * 0.3));
       
-      // Simulate efficiency fluctuations
       const efficiencyBase = state.status === 'green' ? 78 : (state.status === 'yellow' ? 68 : 58);
       state.efficiency = Math.max(50, Math.round(efficiencyBase + (Math.random() * 10 - 5)));
       
-      // Occasionally change conditions
-      if (Math.random() > 0.95) {
+      // Occasionally improve energy saved
+      if (state.status === 'green' && Math.random() > 0.8) {
+        state.energySaved++;
+      }
+      
+      // ═══════════════════════════════════════════════════════════════════════
+      // NORMAL SIMULATION: Create scenarios that trigger suggestions
+      // ═══════════════════════════════════════════════════════════════════════
+      
+      // Strategy: Bias towards non-optimal power levels to showcase suggestions
+      // ~60-70% of the time, ensure power is not optimal for current conditions
+      
+      if (Math.random() > 0.3) { // 70% chance of creating a suggestion opportunity
+        const profile = taskProfiles[state.currentTask];
+        const optimalRange = state.wetSurface ? profile.wetOptimal : profile.dryOptimal;
+        
+        // Randomly pick a non-optimal power level
+        const nonOptimalLevels = [1, 2, 3, 4, 5].filter(
+          level => level < optimalRange[0] || level > optimalRange[1]
+        );
+        
+        if (nonOptimalLevels.length > 0) {
+          // Set power to a non-optimal level
+          state.powerLevel = nonOptimalLevels[Math.floor(Math.random() * nonOptimalLevels.length)];
+        }
+      } else {
+        // 30% chance: set to optimal power (green zone)
+        const profile = taskProfiles[state.currentTask];
+        const optimalRange = state.wetSurface ? profile.wetOptimal : profile.dryOptimal;
+        state.powerLevel = optimalRange[0] + Math.floor(Math.random() * (optimalRange[1] - optimalRange[0] + 1));
+      }
+      
+      // Occasionally change conditions (but not as frequently as power changes)
+      if (Math.random() > 0.9) { // 10% chance
         state.wetSurface = !state.wetSurface;
         state.humidity = state.wetSurface ? Math.floor(70 + Math.random() * 20) : Math.floor(40 + Math.random() * 20);
       }
       
       // Simulate load variations (affects task detection)
-      state.loadLevel = Math.max(1, Math.min(5, state.loadLevel + (Math.random() * 2 - 1)));
+      state.loadLevel = Math.max(1, Math.min(5, state.loadLevel + (Math.random() * 1 - 0.5)));
       
-      // Occasionally change task (simulates operator switching attachments)
-      if (Math.random() > 0.98) {
-        // Simulate task change
+      // Occasionally change task (less frequently to give user time to see suggestions)
+      if (Math.random() > 0.96) { // 4% chance (was 2%)
         const tasks = ['mowing', 'vacuuming', 'sweeping', 'transport'];
         const newTask = tasks[Math.floor(Math.random() * tasks.length)];
         state.currentTask = newTask;
         
-        // Adjust load and power based on new task
+        // Adjust load based on new task
         if (newTask === 'mowing') {
           state.loadLevel = 4 + Math.random();
           state.attachmentActive = true;
@@ -1654,13 +1857,8 @@
           state.attachmentActive = false;
         }
       } else {
-        // Auto-detect task from sensors
+        // Auto-detect task from sensors (most of the time)
         state.currentTask = detectTask();
-      }
-      
-      // Occasionally improve energy saved
-      if (state.status === 'green' && Math.random() > 0.8) {
-        state.energySaved++;
       }
       
       render();
@@ -1690,17 +1888,29 @@
       // 2. Log operator acceptance for ML training
       // 3. Track suggestion effectiveness over time
       
-      // For prototype: Simulate power adjustment
+      // APPLY THE SUGGESTION: Adjust power to optimal level
       state.powerLevel = state.suggestedPowerLevel;
-      state.efficiency = Math.min(95, state.efficiency + 15);  // Immediate improvement
+      
+      // GUARANTEE SUCCESS: Force efficiency high and status green
+      // This ensures the button ALWAYS solves the problem
+      state.efficiency = 85 + Math.floor(Math.random() * 6); // 85-90 range
+      state.status = 'green'; // Force green status
+      
+      // FREEZE SIMULATION for 5 seconds to show stable result
+      // This keeps traffic light and suggestions synchronized
+      state.simulationFrozen = true;
+      state.simulationFreezeUntil = Date.now() + 5000; // 5 seconds from now
+      
       elements.applyBtn.classList.remove('pulse');  // Stop pulsing animation
       
-      // Optional audio feedback
+      // RELEASE WAITING FLAG: No longer waiting for user action
+      state.waitingForUserAction = false;
+      
+      // Audio feedback - play pleasant success sound
       if (state.audioEnabled) {
-        console.log('✅ Audio: Power adjusted – efficiency improved');
-        // In production: Play gentle confirmation chime
+        playSuccessSound(); // Two-tone ascending beep
       }
-      render();  // Update UI immediately
+      render();  // Update UI immediately to show green status
     });
 
     // AUDIO TOGGLE
@@ -1716,8 +1926,9 @@
       // - Remembered between work sessions
     });
 
-    // ACHIEVEMENT BANNER DISMISS
-    // Operator can hide the achievement banner for cleaner view
+    // ACHIEVEMENT BANNER DISMISS - NO LONGER NEEDED
+    // Achievement banner was removed from UI to reduce clutter
+    /*
     elements.closeAchievement.addEventListener('click', () => {
       state.achievementDismissed = true;
       elements.achievement.classList.add('hidden');
@@ -1725,6 +1936,7 @@
       // Banner will reappear if status becomes critical (red or low battery)
       // This ensures safety information isn't permanently hidden
     });
+    */
 
     // TIPS PANEL TOGGLE
     // Shows inline operator guidance (no popup!)
