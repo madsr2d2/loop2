@@ -731,7 +731,9 @@
     WHY TASK-SPECIFIC PROFILES ARE CRITICAL:
     
     Early prototypes made the mistake of treating "wet conditions" as a single
-    scenario requiring "less power." This is WRONG and would frustrate operators!
+    scenario with generic power adjustments. This is WRONG and would frustrate operators!
+    
+    THE CORRECT PRINCIPLE: WET = HEAVIER = MORE POWER (for most tasks)
     
     The physics of each task are fundamentally different:
     
@@ -746,13 +748,24 @@
     └─────────────────────────────────────────────────────────────────────┘
     
     ┌─────────────────────────────────────────────────────────────────────┐
-    │ VACUUMING WET LEAVES                                                │
+    │ VACUUMING WET LEAVES/DEBRIS                                         │
     ├─────────────────────────────────────────────────────────────────────┤
-    │ • Wet debris is heavier, less likely to be airborne                 │
-    │ • Doesn't fly around, so less suction needed to capture it          │
-    │ • Over-suction wastes energy on already-grounded material           │
-    │ • RESULT: Need LESS power in wet vs dry conditions                  │
-    │ • Optimal: Level 2-3 (vs Level 4-5 for dry)                        │
+    │ • Wet debris is HEAVIER (waterlogged, saturated)                    │
+    │ • Requires MORE suction power to lift heavy material                │
+    │ • Dry debris is LIGHTER and easier to vacuum with less power        │
+    │ • RESULT: Need MORE power in wet vs dry conditions                  │
+    │ • Optimal: Level 4-5 wet (vs Level 2-3 for dry)                    │
+    └─────────────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │ SWEEPING WET DEBRIS                                                 │
+    ├─────────────────────────────────────────────────────────────────────┤
+    │ • Wet debris is HEAVIER and sticks to ground                        │
+    │ • Brush needs MORE power to dislodge and move heavy material        │
+    │ • Dry debris is lighter but creates dust if power too high          │
+    │ • Wet surface also requires care with traction (slip risk)          │
+    │ • RESULT: Need MORE power in wet conditions, but watch traction     │
+    │ • Optimal: Level 4-5 wet (vs Level 3-4 for dry)                    │
     └─────────────────────────────────────────────────────────────────────┘
     
     ┌─────────────────────────────────────────────────────────────────────┐
@@ -802,18 +815,18 @@
         icon: '🌀',
         name: 'Vacuuming',
         details: 'Suction unit active',
-        dryOptimal: [4, 5],
-        wetOptimal: [2, 3],
+        dryOptimal: [2, 3],  // Dry debris is LIGHT - needs LESS power
+        wetOptimal: [4, 5],  // Wet debris is HEAVY - needs MORE power
         suggestions: {
           dry: {
-            optimal: 'Dry debris - Level 4-5 for effective collection',
-            tooLow: 'Increase suction - light debris needs higher power',
-            tooHigh: 'Level 5 is appropriate for dry conditions'
+            optimal: 'Dry debris - Level 2-3 optimal (lightweight material)',
+            tooLow: 'Increase to Level 2 minimum for effective pickup',
+            tooHigh: 'Reduce suction - dry debris is light, excess power wastes energy'
           },
           wet: {
-            optimal: 'Wet debris - Level 2-3 optimal (heavy, less airborne)',
-            tooLow: 'Minimum Level 2 needed for collection',
-            tooHigh: 'Reduce suction - wet debris is heavy, over-suction wastes energy'
+            optimal: 'Wet debris - Level 4-5 needed (heavy, waterlogged material)',
+            tooLow: 'Increase suction - wet debris is heavy and requires more power',
+            tooHigh: 'Level 5 is maximum recommended for wet conditions'
           }
         }
       },
@@ -822,18 +835,18 @@
         icon: '🧹',
         name: 'Sweeping',
         details: 'Brush engaged',
-        dryOptimal: [3, 4],
-        wetOptimal: [3, 4],
+        dryOptimal: [3, 4],  // Dry debris is easier to move
+        wetOptimal: [4, 5],  // Wet debris is HEAVIER - needs MORE brush power
         suggestions: {
           dry: {
             optimal: 'Dry surface - Level 3-4 for efficient sweeping',
             tooLow: 'Increase brush speed for better debris pickup',
-            tooHigh: 'Reduce to Level 4 - excess power creates dust'
+            tooHigh: 'Reduce to Level 4 - excess power creates dust clouds'
           },
           wet: {
-            optimal: 'Wet surface - Level 3-4 maintains traction and pickup',
-            tooLow: 'Increase slightly - wet debris needs consistent force',
-            tooHigh: 'Level 4 is sufficient - higher power risks wheel slip'
+            optimal: 'Wet surface - Level 4-5 needed (heavy debris, sticks to ground)',
+            tooLow: 'Increase power - wet debris is heavier and harder to move',
+            tooHigh: 'Level 5 is maximum - higher power risks wheel slip on wet surface'
           }
         }
       },
@@ -853,7 +866,7 @@
           wet: {
             optimal: 'Wet surface - Level 2-3, reduce SPEED to prevent slip',
             tooLow: 'Maintain Level 2 minimum for traction control',
-            tooHigh: 'Reduce power - focus on speed control, not power'
+            tooHigh: 'Reduce to Level 3 - no load requires less power, maintain steady speed'
           }
         }
       }
@@ -862,10 +875,10 @@
     // State management
     let state = {
       battery: 60,
-      humidity: 78,
-      wetSurface: true,
+      humidity: 45,  // Lower humidity for dry conditions
+      wetSurface: false,  // Start DRY to showcase energy SAVINGS (reduce power suggestions)
       efficiency: 78,
-      powerLevel: 5,
+      powerLevel: 5,  // Start at high power (will trigger "reduce power" suggestion)
       suggestedPowerLevel: 3,
       streak: 24,
       energySaved: 18,
@@ -1804,21 +1817,35 @@
       // NORMAL SIMULATION: Create scenarios that trigger suggestions
       // ═══════════════════════════════════════════════════════════════════════
       
-      // Strategy: Bias towards non-optimal power levels to showcase suggestions
-      // ~60-70% of the time, ensure power is not optimal for current conditions
+      // CRITICAL DESIGN DECISION:
+      // We want to showcase the VALUE PROPOSITION of EAAS = ENERGY SAVINGS
+      // This means showing "reduce power" suggestions MORE than "increase power"
+      // 
+      // Strategy:
+      // - Surface is MOSTLY DRY (70% dry, 30% wet) 
+      // - Power levels biased towards TOO HIGH (showing savings opportunity)
+      // - This demonstrates the core benefit: extending runtime by reducing waste
       
       if (Math.random() > 0.3) { // 70% chance of creating a suggestion opportunity
         const profile = taskProfiles[state.currentTask];
         const optimalRange = state.wetSurface ? profile.wetOptimal : profile.dryOptimal;
         
-        // Randomly pick a non-optimal power level
-        const nonOptimalLevels = [1, 2, 3, 4, 5].filter(
-          level => level < optimalRange[0] || level > optimalRange[1]
-        );
+        // BIAS TOWARDS "TOO HIGH" POWER SCENARIOS (energy savings!)
+        // 60% too high, 40% too low
+        const showSavingsOpportunity = Math.random() > 0.4;
         
-        if (nonOptimalLevels.length > 0) {
-          // Set power to a non-optimal level
-          state.powerLevel = nonOptimalLevels[Math.floor(Math.random() * nonOptimalLevels.length)];
+        if (showSavingsOpportunity) {
+          // Pick a power level ABOVE optimal (will suggest reduction = savings!)
+          const tooHighLevels = [1, 2, 3, 4, 5].filter(level => level > optimalRange[1]);
+          if (tooHighLevels.length > 0) {
+            state.powerLevel = tooHighLevels[Math.floor(Math.random() * tooHighLevels.length)];
+          }
+        } else {
+          // Pick a power level BELOW optimal (will suggest increase)
+          const tooLowLevels = [1, 2, 3, 4, 5].filter(level => level < optimalRange[0]);
+          if (tooLowLevels.length > 0) {
+            state.powerLevel = tooLowLevels[Math.floor(Math.random() * tooLowLevels.length)];
+          }
         }
       } else {
         // 30% chance: set to optimal power (green zone)
@@ -1827,14 +1854,19 @@
         state.powerLevel = optimalRange[0] + Math.floor(Math.random() * (optimalRange[1] - optimalRange[0] + 1));
       }
       
-      // Occasionally change conditions (but not as frequently as power changes)
-      if (Math.random() > 0.9) { // 10% chance
-        state.wetSurface = !state.wetSurface;
-        state.humidity = state.wetSurface ? Math.floor(70 + Math.random() * 20) : Math.floor(40 + Math.random() * 20);
+      // Change surface conditions periodically
+      // BIAS TOWARDS DRY (70% dry, 30% wet) to showcase energy savings
+      if (Math.random() > 0.92) { // ~8% chance each cycle
+        // Weighted random: 70% chance of dry, 30% chance of wet
+        state.wetSurface = Math.random() > 0.7; // 30% chance of wet
+        state.humidity = state.wetSurface ? Math.floor(70 + Math.random() * 20) : Math.floor(35 + Math.random() * 25);
       }
       
-      // Simulate load variations (affects task detection)
-      state.loadLevel = Math.max(1, Math.min(5, state.loadLevel + (Math.random() * 1 - 0.5)));
+      // Simulate load variations (affects task detection and power requirements)
+      // More realistic variation pattern
+      if (Math.random() > 0.85) { // 15% chance of load change
+        state.loadLevel = Math.max(1, Math.min(5, Math.floor(2 + Math.random() * 3)));
+      }
       
       // Occasionally change task (less frequently to give user time to see suggestions)
       if (Math.random() > 0.96) { // 4% chance (was 2%)

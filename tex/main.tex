@@ -14,8 +14,6 @@
 %\input{Frontmatter/Copyright.tex}
 %\clearpage 
 \pagestyle{main}
-\input{Frontmatter/Approval.tex}
-%\clearpage 
 %\input{Frontmatter/Abstract.tex}
 %\clearpage 
 %\input{Frontmatter/Acknowledgements.tex}
@@ -27,6 +25,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagenumbering{arabic}
 \input{Sections/Executive_summary}
+\clearpage
 \input{Sections/Introduction}
 \input{Sections/The_Hard_Nut}
 \input{Sections/Proposal_rationale}
@@ -50,11 +49,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
 \part*{Appendices}
-\addcontentsline{toc}{part}{Appendices}
 \input{Backmatter/Appendix.tex}
 \clearpage
-\includepdf[pages=1, scale=0.8, pagecommand={\thispagestyle{plain}\section{Egholm Case Brief}}]{Backmatter/Egholm_case_brife.pdf}
 \input{Backmatter/VisitNotes.tex}
+\includepdf[pages=1, scale=0.9, pagecommand={\thispagestyle{plain}\section{Egholm Case Brief}}]{Backmatter/Egholm_case_brife.pdf}
 \clearpage
 \printbibliography[heading=bibintoc,title={Bibliography}]
 %\cleardoublepage 

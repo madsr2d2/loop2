@@ -38,13 +38,15 @@
 
   \entry{designcouncil2005}{online}{}
     \name{author}{1}{}{%
-      {{hash=D}{%
-         family={{Design Council}},
-         familyi={D\bibinitperiod},
+      {{hash=CD}{%
+         family={Council},
+         familyi={C\bibinitperiod},
+         given={Design},
+         giveni={D\bibinitperiod},
       }}%
     }
-    \strng{namehash}{D1}
-    \strng{fullhash}{D1}
+    \strng{namehash}{CD1}
+    \strng{fullhash}{CD1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
     \field{title}{The Double Diamond Framework}
@@ -55,24 +57,56 @@
     \field{year}{2005}
   \endentry
 
-  \entry{norman2013design}{book}{}
+  \entry{mdpi2024eco}{article}{}
     \name{author}{1}{}{%
-      {{hash=ND}{%
-         family={Norman},
-         familyi={N\bibinitperiod},
-         given={Don},
-         giveni={D\bibinitperiod},
+      {{hash=eaM}{%
+         prefix={et},
+         prefixi={e\bibinitperiod},
+         family={al.},
+         familyi={a\bibinitperiod},
+         given={Miqdady},
+         giveni={M\bibinitperiod},
       }}%
     }
     \list{publisher}{1}{%
-      {Basic books}%
+      {MDPI}%
     }
-    \strng{namehash}{ND1}
-    \strng{fullhash}{ND1}
+    \strng{namehash}{aMe1}
+    \strng{fullhash}{aMe1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{title}{The design of everyday things}
-    \field{year}{2013}
+    \field{title}{Driving Sustainability: Analyzing Eco-Driving Efficiency
+  Across Urban and Interurban Roads with Electric and Combustion Vehicles}
+    \verb{url}
+    \verb https://www.mdpi.com/2032-6653/16/3/143
+    \endverb
+    \field{journaltitle}{World Electric Vehicle Journal}
+    \field{year}{2025}
+  \endentry
+
+  \entry{aceee2022ev}{report}{}
+    \name{author}{1}{}{%
+      {{hash=faEEEAC}{%
+         prefix={for\bibnamedelima an},
+         prefixi={f\bibinitperiod\bibinitdelim a\bibinitperiod},
+         family={Energy-Efficient\bibnamedelima Economy},
+         familyi={E\bibinithyphendelim E\bibinitperiod\bibinitdelim
+  E\bibinitperiod},
+         given={American\bibnamedelima Council},
+         giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{EEEACfa1}
+    \strng{fullhash}{EEEACfa1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Electric Vehicle Efficiency: Unlocking Consumer Savings and
+  Environmental Gains}
+    \verb{url}
+    \verb https://www.aceee.org/sites/default/files/pdfs/electric_vehicle_effic
+    \verb iency_-_unlocking_consumer_savings_and_environmental_gains.pdf
+    \endverb
+    \field{year}{2024}
   \endentry
 
   \entry{thaler2008nudge}{book}{}

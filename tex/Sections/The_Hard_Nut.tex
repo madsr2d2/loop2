@@ -5,17 +5,30 @@ The company’s original challenge focused on improving the everyday energy effi
 \subsection{Contextual Analysis}
 Through early desk research and conversations with company representatives, we gained a clearer picture of the tractor’s use context. The E-Traktor is typically operated by municipal workers, landscape contractors, and facility maintenance personnel. These operators often work under time pressure, perform repetitive tasks, and do not always have strong incentives to adjust machine settings for optimal energy usage. We believe that many users tend to run the tractor at maximum power, regardless of weather, task type, or terrain conditions, even in situations where lower power would be sufficient.
 
-From our company visit and dialogue with Egholm's engineers, we learned that approximately 25\% of the tractor's total cost comes from the battery pack. Consequently, inefficient operation—such as running at maximum power when unneeded—drains energy unnecessarily and inflates the Total Cost of Ownership (TCO). Tasks such as mowing wet grass or vacuuming dust in high humidity have vastly different power requirements, yet operators often use a static, high-power setting. It became evident that improving efficiency is not simply about installing bigger batteries or redesigning motors—it is about helping users operate smarter.
+From our company visit and dialogue with Egholm A/S' engineers, we learned that approximately 25\% of the tractor's total cost comes from the battery pack . This makes energy conservation a direct financial lever. Crucially, Egholm A/S' internal data reveals a significant optimization potential: while some attachments show an efficiency improvement margin of 10--15\%, others could see improvements as high as 40--50\% through optimal usage [\ref{app:visitnotes}].
+
+Despite this potential, there is currently no training available to guide operators on energy-efficient habits. Consequently, inefficient operation—such as running at maximum power when unneeded—drains energy unnecessarily and inflates the Total Cost of Ownership (TCO). Tasks such as mowing wet grass or vacuuming dust in high humidity have vastly different power requirements, yet operators often use a static, high-power setting. It became evident that improving efficiency is not simply about installing bigger batteries or redesigning motors—it is about helping users operate smarter.
 
 \subsection{Defining the Core Problem}
-We utilized the \textbf{Double Diamond} framework~\cite{designcouncil2005} to structure our innovation process. In the \textit{Discover} phase, we analyzed Egholm's technical setup and operational context. In the \textit{Define} phase, we pinpointed user behavior as the primary variable in energy consumption. This led us to define our ``Hard Nut'' challenge statement:
+We utilized the \textbf{Double Diamond} framework to structure our innovation process~\cite{designcouncil2005}. In the \textit{Discover} phase, we analyzed Egholm A/S' technical setup and operational context. In the \textit{Define} phase, we pinpointed user behavior as the primary variable in energy consumption. This led us to define our ``Hard Nut'' challenge statement:
 
 \begin{quote}
-    \textbf{\emph{How can we influence and support user behavior so that the E-Tractor is used more energy-efficiently in daily operation—without it being perceived as a limitation—and thus contribute to lower operating costs and increased market value?}}
+	\textbf{\emph{How can we influence and support user behavior so that the E-Tractor is used more energy-efficiently in daily operation—without it being perceived as a limitation—and thus contribute to lower operating costs and increased market value?}}
 \end{quote}
 
+\subsection{Problem Validation}
+We validated the problem through multiple methods:
+
+\begin{itemize}
+	\item Interviews with Egholm A/S’ COO and engineers, who highlighted the lack of data, the behaviourally driven inefficiencies, and the desire for non-intrusive ways to influence user behaviour [\ref{app:mail}, \ref{app:visitnotes}].
+	\item Desk research on the operational context of municipal electric machinery, which showed similar behavioural patterns in other segments~\cite{mdpi2024eco}.
+	\item Technical insights from Egholm A/S’ internal testing, which confirmed that energy needs vary significantly depending on the task (e.g., wet vs. dry grass) [\ref{app:visitnotes}].
+\end{itemize}
+
+These combined findings validate that the main “hard nut” is behavioural, not technical.
+
 \subsection{Behavioral Insights}
-During the first diamond phase, detailed operator interviews highlighted several recurring behavioral themes that informed our strategy:
+During the first diamond phase, we constructed a user persona to represent the typical operator. This analysis highlighted several recurring behavioral themes that informed our strategy:
 
 \begin{itemize}
 	\item \textbf{Low Prioritization:} Energy optimization is rarely a conscious priority for daily users.
@@ -25,4 +38,4 @@ During the first diamond phase, detailed operator interviews highlighted several
 	\item \textbf{Diffuse Responsibility:} The municipality pays the energy bill, while the operator controls the machine, creating a disconnect between usage and cost.
 \end{itemize}
 
-The human side of this ``Hard Nut'' is critical. Many operators rely on habits formed with diesel engines~\cite{norman2013design}, where idling or high RPMs had different consequences. Electric drivetrains deliver instant torque, meaning small adjustments can yield significant savings. To succeed, any solution must provide transparent, non-intrusive feedback that feels like a helpful assist rather than a restriction.
+The human side of this ``Hard Nut'' is critical. Many operators rely on habits formed with diesel engines, where idling or high RPMs had different consequences. Electric drivetrains are highly efficient, meaning that even small operational adjustments can yield significant energy savings~\cite{aceee2022ev}. To succeed, any solution must provide transparent, non-intrusive feedback that feels like a helpful assist rather than a restriction.

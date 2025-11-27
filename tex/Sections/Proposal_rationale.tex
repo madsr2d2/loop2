@@ -1,69 +1,60 @@
 \section{Proposal Rationale}
 
-Our proposal is centred on developing an Energy-Aware Assistance System (EAAS) for Egholm’s E-Traktor: an interaction-driven support system that guides operators toward more energy-efficient behaviour through simple, real-time feedback and light-touch behavioural nudges~\cite{thaler2008nudge}. The system is designed to respect operators’ needs for efficiency and control, while simultaneously helping Egholm and their customers reduce energy consumption, extend battery runtime, and document usage patterns.
+Our proposal is centred on developing an Energy-Aware Assistance System (EAAS) for Egholm A/S’ E-Traktor: an interaction-driven support system that guides operators toward more energy-efficient behaviour through simple, real-time feedback and light-touch behavioural nudges~\cite{thaler2008nudge}. The system is designed to respect operators’ needs for efficiency and control, while simultaneously helping Egholm A/S and their customers reduce energy consumption, extend battery runtime, and document usage patterns.
 
-\subsection{Problem and Vision}
-Throughout the project, we identified a core behavioural issue: operators consistently default to maximum power, regardless of the task, surface conditions, or the actual energy required. As our research and interviews showed, this behaviour is rooted not in laziness but in uncertainty and risk aversion—operators prefer predictability over optimisation. Combined with the absence of telematics and feedback systems, this leads to unnecessary energy consumption and reduced runtime.
+\subsection{Vision}
+Throughout the project, we identified a core behavioural issue: operators consistently default to maximum power, regardless of the task, surface conditions, or the actual energy required. As our research showed, this behaviour is rooted not in laziness but in uncertainty and risk aversion—operators prefer predictability over optimisation. Combined with the absence of telematics and feedback systems, this leads to unnecessary energy consumption and reduced runtime.
 
 The vision behind our proposal is therefore twofold:
-\begin{itemize}
+
+\begin{enumerate}
 	\item Enable operators to make smarter decisions without increasing cognitive load.
-	\item Provide Egholm with data and tools that turn energy efficiency into a strategic advantage, both commercially and sustainably.
-\end{itemize}
+	\item Provide Egholm A/S with data and tools that turn energy efficiency into a strategic advantage, both commercially and sustainably.
+\end{enumerate}
 
 The EAAS concept embodies this vision by creating a direct bridge between machine data, user behaviour, and energy-aware operation.
-
-\subsection{Problem Validation}
-We validated the problem through multiple methods:
-\begin{itemize}
-	\item Interviews with Egholm’s COO and engineers, who highlighted the lack of data, the behaviourally driven inefficiencies, and the desire for non-intrusive ways to influence user behaviour.
-	\item Desk research on the operational context of municipal electric machinery, which showed similar behavioural patterns in other segments.
-	\item Technical insights from Egholm’s internal testing, which confirmed that energy needs vary significantly depending on the task (e.g., wet vs. dry grass).
-\end{itemize}
-
-These combined findings validate that the main “hard nut” is behavioural, not technical.
 
 \subsection{Proposed Solution: The Energy-Aware Assistance System (EAAS)}
 The Energy-Aware Assistance System (EAAS) is not merely a monitoring tool but a behavioral design solution. It bridges the gap between the machine's technical capabilities and the operator's daily usage patterns. The system is built upon five core design principles derived from our prototyping phase:
 
 \begin{enumerate}
-    \item \textbf{Task-Aware Intelligence:} The system does not apply a "one-size-fits-all" rule. Instead, it auto-detects the current operation (e.g., mowing, vacuuming, sweeping, or transport) and adjusts its recommendations accordingly. This addresses a critical insight: optimal power varies by task \textit{and} conditions. For instance, mowing wet grass requires \textit{more} power to prevent clogging, whereas vacuuming wet leaves requires \textit{less} power to avoid wasting energy on heavy, grounded debris.
-    
-    \item \textbf{Non-Intrusive Feedback:} To respect the operator's workflow, the system employs a "Traffic Light" metaphor (Green-Yellow-Red) for at-a-glance comprehension~\cite{norman2013design}. There are no pop-up windows or blocking alerts that interrupt operation.
-    
-    \item \textbf{Positive Reinforcement:} Rather than punishing inefficiency, the system celebrates success. It tracks "Energy Saved" and "Green Zone Streaks" to provide psychological rewards for efficient operation, fostering a sense of achievement rather than surveillance.
-    
-    \item \textbf{Actionable Guidance:} Suggestions are concrete and immediate. Instead of vague advice like "Reduce Power," the system offers a one-tap "Apply Now" feature that adjusts settings to the optimal level, showing the direct runtime benefit (e.g., "+12 min").
-    
-    \item \textbf{Operator Respect:} The system acts as a co-pilot, not an enforcer. Manual control is always available, and alerts can be dismissed, ensuring the operator remains the final authority.
+	\item \textbf{Task-Aware Intelligence:} The system does not apply a "one-size-fits-all" rule. Instead, it auto-detects the current operation (e.g., mowing, vacuuming, sweeping, or transport) and adjusts its recommendations accordingly. This addresses a critical insight: optimal power varies by task \textit{and} conditions. For instance, mowing wet grass requires \textit{more} power to prevent clogging, whereas vacuuming wet leaves requires \textit{less} power to avoid wasting energy on heavy, grounded debris.
+
+	\item \textbf{Non-Intrusive Feedback:} To respect the operator's workflow, the system employs a "Traffic Light" metaphor (Green-Yellow-Red) for at-a-glance comprehension. There are no pop-up windows or blocking alerts that interrupt operation.
+
+	\item \textbf{Positive Reinforcement:} Rather than punishing inefficiency, the system celebrates success. It displays "Time in Green Zone" and cumulative "Energy Saved" metrics directly on the dashboard to provide psychological rewards for efficient operation, fostering a sense of achievement rather than surveillance.
+
+	\item \textbf{Actionable Guidance:} Suggestions are concrete and immediate. Instead of vague advice like "Reduce Power," the system offers a one-tap "Apply Now" feature that adjusts settings to the optimal level, showing the direct runtime benefit (e.g., "+30 min runtime").
+
+	\item \textbf{Operator Respect:} The system acts as a co-pilot, not an enforcer. Manual control is always available, and alerts can be dismissed, ensuring the operator remains the final authority.
 \end{enumerate}
 
-\subsection{Innovation and Value Proposition}
-The innovative aspect of EAAS lies in its integration of behavioral psychology with machine intelligence. Unlike standard telematics that report data \textit{after} the fact, EAAS intervenes in real-time to alter the outcome.
+\subsection{Solution Differentiation and Value Proposition}
+The unique strength of EAAS lies in its integration of behavioral psychology with machine intelligence. Unlike standard telematics that report data \textit{after} the fact, EAAS intervenes in real-time to alter the outcome.
 
-\textbf{Key Innovations:}
+\textbf{Key Design Features:}
 \begin{itemize}
-    \item \textbf{Contextual Intelligence:} The ability to distinguish between scenarios where high power is wasteful (dry sweeping) versus necessary (wet mowing) prevents counterproductive advice that would erode user trust.
-    \item \textbf{Hysteresis Logic:} The feedback algorithm includes a delay buffer to prevent "flickering" signals, creating a calm, stable interface that operators can trust.
-    \item \textbf{Quantified Impact:} By showing the immediate gain in battery runtime, the system translates abstract "efficiency" into the operator's most valuable currency: time to finish the job.
+	\item \textbf{Contextual Intelligence:} The ability to distinguish between scenarios where high power is wasteful (dry sweeping) versus necessary (wet mowing) prevents counterproductive advice that would erode user trust.
+	\item \textbf{Hysteresis Logic:} The feedback algorithm includes a delay buffer to prevent "flickering" signals, creating a calm, stable interface that operators can trust.
+	\item \textbf{Quantified Impact:} By showing the immediate gain in battery runtime, the system translates abstract "efficiency" into the operator's most valuable currency: time to finish the job.
 \end{itemize}
 
-The value proposition extends beyond energy savings: it reduces range anxiety for operators, provides documented sustainability metrics for municipalities, and offers Egholm a software-defined competitive advantage that reduces the pressure to simply install larger, more expensive batteries.
+The value proposition extends beyond energy savings: it reduces range anxiety for operators, provides documented sustainability metrics for municipalities, and offers Egholm A/S a software-defined competitive advantage that reduces the pressure to simply install larger, more expensive batteries.
 
 \subsection{Supporting Insights and Research}
 The proposal rests on several research findings and tests:
 \begin{itemize}
 	\item Behavioural analysis confirming operators’ preference for simplicity and predictability.
 	\item Technical insights showing large variations in power needs depending on conditions.
-	\item Validation from Egholm that telematics is desired but not yet implemented, meaning a lightweight behavioural system is an ideal first step.
+	\item Validation from Egholm A/S that telematics is desired but not yet implemented, meaning a lightweight behavioural system is an ideal first step.
 	\item Industry literature showing that gentle nudges, colour-based feedback, and simplified dashboards significantly change operational habits in professional electric equipment.
 \end{itemize}
 
 \subsection{Solution Validation}
 We validated the EAAS concept through:
 \begin{itemize}
-	\item Feedback sessions with operators, who preferred the simplicity of the coloured display over complex menus.
-	\item Discussions with Egholm’s COO and engineers, who confirmed the technical feasibility and strategic relevance.
+	\item Usability testing with representative users, which showed a strong preference for the simplicity of the coloured display over complex menus.
+	\item Discussions with Egholm A/S’ COO and engineers, who confirmed the technical feasibility and strategic relevance~[\ref{app:visitnotes}].
 	\item Iterative design sessions, where different feedback mechanisms were tested for clarity, intrusiveness, and perceived usefulness.
 \end{itemize}
 
